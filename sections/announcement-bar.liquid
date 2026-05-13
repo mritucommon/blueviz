@@ -7,25 +7,37 @@
             <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
           {%- endif -%}
               <div class="page-width">
-                <p class="announcement-bar__message {{ block.settings.text_alignment }} h5">
-                  {%- if block.settings.text contains '·' or block.settings.text contains '•' or block.settings.text contains '-' -%}
-                    {%- assign split_char = '·' -%}
-                    {%- if block.settings.text contains '•' -%}{%- assign split_char = '•' -%}{%- endif -%}
-                    {%- if block.settings.text contains ' - ' -%}{%- assign split_char = ' - ' -%}{%- endif -%}
-                    {%- assign parts = block.settings.text | split: split_char -%}
-                    {%- for part in parts -%}
-                      <span class="announcement-item">{{ part | strip }}</span>
-                      {%- unless forloop.last -%}
-                        <span class="announcement-divider">&middot;</span>
-                      {%- endunless -%}
-                    {%- endfor -%}
-                  {%- else -%}
-                    <span>{{ block.settings.text | escape }}</span>
-                  {%- endif -%}
-                  {%- if block.settings.link != blank -%}
-                    {% render 'icon-arrow' %}
-                  {%- endif -%}
-                </p>
+                <div class="announcement-bar__message-wrapper">
+                  <p class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+                    {%- if block.settings.text contains '·' or block.settings.text contains '•' or block.settings.text contains '-' -%}
+                      {%- assign split_char = '·' -%}
+                      {%- if block.settings.text contains '•' -%}{%- assign split_char = '•' -%}{%- endif -%}
+                      {%- if block.settings.text contains ' - ' -%}{%- assign split_char = ' - ' -%}{%- endif -%}
+                      {%- assign parts = block.settings.text | split: split_char -%}
+                      
+                      <!-- First Group (visible on desktop, marquee on mobile) -->
+                      <span class="announcement-bar__group">
+                        {%- for part in parts -%}
+                          <span class="announcement-item">{{ part | strip }}</span>
+                          <span class="announcement-divider">&middot;</span>
+                        {%- endfor -%}
+                      </span>
+                      
+                      <!-- Second Group (hidden on desktop, marquee loop on mobile) -->
+                      <span class="announcement-bar__group" aria-hidden="true">
+                        {%- for part in parts -%}
+                          <span class="announcement-item">{{ part | strip }}</span>
+                          <span class="announcement-divider">&middot;</span>
+                        {%- endfor -%}
+                      </span>
+                    {%- else -%}
+                      <span>{{ block.settings.text | escape }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.link != blank -%}
+                      {% render 'icon-arrow' %}
+                    {%- endif -%}
+                  </p>
+                </div>
               </div>
           {%- if block.settings.link != blank -%}
             </a>
@@ -42,29 +54,95 @@
     padding: 10px 0 !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
-  .announcement-bar__message {
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 11px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.12em !important;
-    text-transform: uppercase !important;
-    color: #FFFFFF !important;
-    margin: 0 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 15px !important;
-    flex-wrap: wrap !important;
-    line-height: 1.4 !important;
+  
+  /* Mobile View - Infinite Marquee */
+  @media screen and (max-width: 749px) {
+    .announcement-bar__message-wrapper {
+      overflow: hidden !important;
+      width: 100% !important;
+      position: relative;
+    }
+    .announcement-bar__message {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      width: max-content !important;
+      gap: 0 !important;
+      animation: marquee-scroll 18s linear infinite !important;
+      justify-content: flex-start !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      font-family: 'Outfit', sans-serif !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.12em !important;
+      text-transform: uppercase !important;
+      color: #FFFFFF !important;
+      line-height: 1.4 !important;
+    }
+    .announcement-bar__group {
+      display: flex !important;
+      align-items: center !important;
+      flex-shrink: 0 !important;
+      white-space: nowrap !important;
+    }
+    .announcement-item {
+      padding: 0 15px !important;
+      display: inline-block !important;
+    }
+    .announcement-divider {
+      color: rgba(255, 255, 255, 0.4) !important;
+      font-size: 14px !important;
+      font-weight: 400 !important;
+      display: inline-block !important;
+    }
+    
+    @keyframes marquee-scroll {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
   }
-  .announcement-item {
-    display: inline-block !important;
-    white-space: nowrap !important;
-  }
-  .announcement-divider {
-    color: rgba(255, 255, 255, 0.4) !important;
-    font-size: 14px !important;
-    font-weight: 400 !important;
+
+  /* Desktop View - Static Centered */
+  @media screen and (min-width: 750px) {
+    .announcement-bar__message-wrapper {
+      width: 100% !important;
+    }
+    .announcement-bar__message {
+      font-family: 'Outfit', sans-serif !important;
+      font-size: 11px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.12em !important;
+      text-transform: uppercase !important;
+      color: #FFFFFF !important;
+      margin: 0 !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 15px !important;
+      flex-wrap: wrap !important;
+      line-height: 1.4 !important;
+    }
+    /* Hide second marquee duplicate on desktop */
+    .announcement-bar__group[aria-hidden="true"] {
+      display: none !important;
+    }
+    .announcement-bar__group {
+      display: contents !important; /* unpacks span to parents flex layout */
+    }
+    .announcement-item {
+      display: inline-block !important;
+      white-space: nowrap !important;
+    }
+    .announcement-divider {
+      color: rgba(255, 255, 255, 0.4) !important;
+      font-size: 14px !important;
+      font-weight: 400 !important;
+    }
   }
 </style>
 
