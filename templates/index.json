@@ -275,12 +275,12 @@
         "description_color": "#8892a0",
         "button_1_label": "SHOP THE SALE",
         "button_1_link": "",
-        "button_1_bg": "transparent",
+        "button_1_bg": "rgba(0,0,0,0)",
         "button_1_text": "#ffffff",
         "button_1_border": "#1f2e4d",
         "button_2_label": "ALL PRODUCTS",
         "button_2_link": "",
-        "button_2_bg": "transparent",
+        "button_2_bg": "rgba(0,0,0,0)",
         "button_2_text": "#ffffff",
         "button_2_border": "#1f2e4d",
         "button_hover_bg": "#4194ff",
@@ -290,6 +290,33 @@
         "padding_top_mobile": 60,
         "padding_bottom_mobile": 60
       }
+    },
+    "bestsellers_adNwXf": {
+      "type": "bestsellers",
+      "name": "Bestsellers Grid",
+      "settings": {
+        "full_width": false,
+        "subheading": "CUSTOMER FAVOURITES",
+        "title": "BESTSELLERS",
+        "collection": "",
+        "products_to_show": 4,
+        "show_view_all": true,
+        "view_all_text": "VIEW ALL",
+        "view_all_link": "",
+        "columns_desktop": 4,
+        "mobile_layout": "slider",
+        "card_aspect_ratio": "3/4",
+        "card_border_radius": 4,
+        "gap_desktop": 20,
+        "gap_mobile": 16,
+        "padding_top_desktop": 50,
+        "padding_bottom_desktop": 50,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "section_bg": "#ffffff",
+        "section_text_color": "#0b1220",
+        "section_subheading_color": "#8892a0"
+      }
     }
   },
   "order": [
@@ -297,6 +324,7 @@
     "scrolling-ticker",
     "collections-grid",
     "new-arrivals",
-    "sale_banner_eWGJYH"
+    "sale_banner_eWGJYH",
+    "bestsellers_adNwXf"
   ]
 }
