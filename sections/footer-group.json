@@ -37,13 +37,48 @@
             "mock_links": "Track Order|Returns|Shipping Info|Contact Us",
             "highlight_text": ""
           }
+        },
+        "payment_1": {
+          "type": "payment_badge",
+          "settings": {
+            "title": "UPI"
+          }
+        },
+        "payment_2": {
+          "type": "payment_badge",
+          "settings": {
+            "title": "VISA"
+          }
+        },
+        "payment_3": {
+          "type": "payment_badge",
+          "settings": {
+            "title": "MASTERCARD"
+          }
+        },
+        "payment_4": {
+          "type": "payment_badge",
+          "settings": {
+            "title": "RUPAY"
+          }
+        },
+        "payment_5": {
+          "type": "payment_badge",
+          "settings": {
+            "title": "COD"
+          }
         }
       },
       "block_order": [
         "brand_info",
         "shop_menu",
         "info_menu",
-        "support_menu"
+        "support_menu",
+        "payment_1",
+        "payment_2",
+        "payment_3",
+        "payment_4",
+        "payment_5"
       ],
       "settings": {
         "bg_color": "#070d18",

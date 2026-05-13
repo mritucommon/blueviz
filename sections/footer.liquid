@@ -209,6 +209,7 @@
   <!-- Top Content (Columns) -->
   <div class="footer__content-top">
     {%- for block in section.blocks -%}
+      {%- if block.type == 'payment_badge' -%}{%- continue -%}{%- endif -%}
       <div class="footer-block-{{ section.id }}" {{ block.shopify_attributes }}>
         
         {%- case block.type -%}
@@ -286,10 +287,26 @@
 
     {%- if section.settings.show_payment -%}
       <div class="footer__payment-list-{{ section.id }}">
-        {%- assign payment_badges = section.settings.payment_badges | split: '|' -%}
-        {%- for badge in payment_badges -%}
-          <span class="footer__payment-badge-{{ section.id }}">{{ badge }}</span>
+        {%- assign has_payment_blocks = false -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'payment_badge' -%}
+            {%- assign has_payment_blocks = true -%}
+            <span class="footer__payment-badge-{{ section.id }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: height: 24 }}" alt="{{ block.settings.title }}" height="24" style="object-fit: contain;">
+              {%- else -%}
+                {{ block.settings.title }}
+              {%- endif -%}
+            </span>
+          {%- endif -%}
         {%- endfor -%}
+        
+        {%- if has_payment_blocks == false -%}
+          {%- assign payment_badges = section.settings.payment_badges | split: '|' -%}
+          {%- for badge in payment_badges -%}
+            <span class="footer__payment-badge-{{ section.id }}">{{ badge }}</span>
+          {%- endfor -%}
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>
@@ -351,6 +368,24 @@
           "id": "social_yt",
           "label": "YouTube Link",
           "default": "/"
+        }
+      ]
+    },
+    {
+      "type": "payment_badge",
+      "name": "Payment Badge",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Payment Image",
+          "info": "Optional. Will override text if provided."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Payment Name",
+          "default": "VISA"
         }
       ]
     },
