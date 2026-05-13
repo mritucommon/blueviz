@@ -1,0 +1,820 @@
+{%- style -%}
+  .collections-grid-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    background-color: {{ section.settings.section_bg }};
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collections-grid-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+  }
+
+  .collections-grid__header-{{ section.id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+    gap: 20px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .collections-grid__header-{{ section.id }} {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      gap: 15px;
+    }
+  }
+
+  .collections-grid__title-group-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .collections-grid__subheading-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: {{ section.settings.section_subheading_color }};
+  }
+
+  .collections-grid__title-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(32px, 4.5vw, 48px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: {{ section.settings.section_text_color }};
+    margin: 0;
+  }
+
+  /* View All Button */
+  .collections-grid__btn-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 12px 28px;
+    border: 1px solid {{ section.settings.section_text_color }};
+    color: {{ section.settings.section_text_color }};
+    background-color: transparent;
+    transition: all 0.25s ease;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .collections-grid__btn-{{ section.id }}:hover {
+    background-color: {{ section.settings.section_text_color }};
+    color: {{ section.settings.section_bg }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .collections-grid__btn-{{ section.id }} {
+      align-self: stretch;
+      text-align: center;
+    }
+  }
+
+  /* Grid Layout */
+  .collections-grid__container-{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    gap: {{ section.settings.gap_desktop }}px;
+  }
+
+  /* Mobile Swipe Slider & Responsive Grids */
+  @media screen and (max-width: 749px) {
+    .collections-grid__container-{{ section.id }}--mobile-slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: {{ section.settings.gap_mobile }}px;
+      margin-left: -20px;
+      margin-right: -20px;
+      padding-left: 20px;
+      padding-right: 20px;
+      scrollbar-width: none; /* Firefox */
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .collections-grid__container-{{ section.id }}--mobile-slider::-webkit-scrollbar {
+      display: none; /* Safari and Chrome */
+    }
+
+    .collections-grid__container-{{ section.id }}--mobile-slider .collection-card-{{ section.id }} {
+      flex: 0 0 78%;
+      scroll-snap-align: start;
+    }
+
+    .collections-grid__container-{{ section.id }}--mobile-grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: {{ section.settings.gap_mobile }}px;
+    }
+
+    .collections-grid__container-{{ section.id }}--mobile-grid-1 {
+      grid-template-columns: minmax(0, 1fr);
+      gap: {{ section.settings.gap_mobile }}px;
+    }
+  }
+
+  /* Collection Card Base Styling */
+  .collection-card-{{ section.id }} {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 30px;
+    border-radius: {{ section.settings.card_border_radius }}px;
+    overflow: hidden;
+    text-decoration: none;
+    background: var(--card-bg);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transform: translateY(0);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    z-index: 1;
+    box-sizing: border-box;
+    
+    /* Aspect Ratio Handling */
+    {% if section.settings.card_aspect_ratio == '3/4' %}
+      aspect-ratio: 3/4;
+    {% elsif section.settings.card_aspect_ratio == '2/3' %}
+      aspect-ratio: 2/3;
+    {% elsif section.settings.card_aspect_ratio == '1/1' %}
+      aspect-ratio: 1/1;
+    {% else %}
+      height: {{ section.settings.card_aspect_ratio }};
+    {% endif %}
+  }
+
+  @media screen and (max-width: 480px) {
+    .collection-card-{{ section.id }} {
+      padding: 24px;
+      {% if section.settings.card_aspect_ratio == '3/4' or section.settings.card_aspect_ratio == '2/3' %}
+        aspect-ratio: 0.75; /* Perfect vertical look on small screens */
+      {% endif %}
+    }
+  }
+
+  .collection-card-{{ section.id }}:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Card Image & Overlay */
+  .collection-card__image-{{ section.id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .collection-card-{{ section.id }}:hover .collection-card__image-{{ section.id }} {
+    transform: scale(1.08);
+  }
+
+  .collection-card__overlay-{{ section.id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.85) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Patterns Overlays */
+  .collection-card__pattern-{{ section.id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 2;
+    opacity: var(--pattern-opacity);
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
+  }
+
+  .collection-card-{{ section.id }}:hover .collection-card__pattern-{{ section.id }} {
+    transform: scale(1.05);
+    opacity: calc(var(--pattern-opacity) + 0.08) !important;
+  }
+
+  .pattern-diagonal-{{ section.id }} {
+    background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 1) 0px, rgba(255, 255, 255, 1) 1px, transparent 1px, transparent 16px);
+  }
+
+  .pattern-horizontal-{{ section.id }} {
+    background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 1) 0px, rgba(255, 255, 255, 1) 1px, transparent 1px, transparent 12px);
+  }
+
+  .pattern-dot-grid-{{ section.id }} {
+    background-image: radial-gradient(rgba(255, 255, 255, 1) 1.5px, transparent 1.5px);
+    background-size: 16px 16px;
+  }
+
+  .pattern-grid-{{ section.id }} {
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Giant Background Watermark Text */
+  .collection-card__watermark-{{ section.id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    font-size: clamp(80px, 12vw, 120px);
+    font-weight: 900;
+    font-family: 'Outfit', sans-serif;
+    color: var(--watermark-color);
+    opacity: var(--watermark-opacity);
+    pointer-events: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    letter-spacing: -0.02em;
+    user-select: none;
+    z-index: 1;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
+  }
+
+  .collection-card-{{ section.id }}:hover .collection-card__watermark-{{ section.id }} {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: calc(var(--watermark-opacity) + 0.03) !important;
+  }
+
+  /* Card Content Layout */
+  .collection-card__content-{{ section.id }} {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+  }
+
+  .collection-card__subtitle-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--card-sub-color);
+    line-height: 1.2;
+  }
+
+  .collection-card__title-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(20px, 2.5vw, 28px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--card-text-color);
+    margin: 0 0 10px 0;
+  }
+
+  /* CTA Link & Icon */
+  .collection-card__link-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--card-text-color);
+    opacity: 0.85;
+    transition: opacity 0.3s ease;
+  }
+
+  .collection-card__link-arrow-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .collection-card__link-arrow-{{ section.id }} svg {
+    width: 14px;
+    height: 10px;
+  }
+
+  .collection-card-{{ section.id }}:hover .collection-card__link-arrow-{{ section.id }} {
+    transform: translateX(6px);
+  }
+
+  .collection-card-{{ section.id }}:hover .collection-card__link-{{ section.id }} {
+    opacity: 1;
+  }
+{%- endstyle -%}
+
+<div class="collections-grid-{{ section.id }} {% unless section.settings.full_width %}page-width{% endunless %}" id="CollectionsGrid-{{ section.id }}" {{ section.shopify_attributes }}>
+  
+  <!-- Section Title & Row Header -->
+  <div class="collections-grid__header-{{ section.id }}">
+    <div class="collections-grid__title-group-{{ section.id }}">
+      {%- if section.settings.subheading != blank -%}
+        <span class="collections-grid__subheading-{{ section.id }}">{{ section.settings.subheading | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="collections-grid__title-{{ section.id }}">{{ section.settings.title }}</h2>
+      {%- endif -%}
+    </div>
+    
+    {%- if section.settings.show_view_all and section.settings.view_all_link != blank -%}
+      <a href="{{ section.settings.view_all_link }}" class="collections-grid__btn-{{ section.id }}">
+        {{ section.settings.view_all_text | default: 'VIEW ALL' | escape }}
+      </a>
+    {%- endif -%}
+  </div>
+
+  <!-- Cards Grid Wrapper -->
+  <div class="collections-grid__container-{{ section.id }} collections-grid__container-{{ section.id }}--mobile-{{ section.settings.mobile_layout }}">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign collection = collections[block.settings.collection]
+        assign card_url = block.settings.custom_link | default: collection.url | default: '#'
+        assign card_title = block.settings.title | default: collection.title | default: 'Collection'
+        assign card_image = block.settings.image | default: collection.featured_image
+      -%}
+
+      <a href="{{ card_url }}" class="collection-card-{{ section.id }}" style="
+        --card-bg: {{ block.settings.bg_color_gradient | default: block.settings.bg_color_fallback }};
+        --card-text-color: {{ block.settings.text_color }};
+        --card-sub-color: {{ block.settings.subheading_color }};
+        --pattern-opacity: {{ block.settings.pattern_opacity | divided_by: 100.0 }};
+        --watermark-opacity: {{ block.settings.watermark_opacity | divided_by: 100.0 }};
+        --watermark-color: {{ block.settings.watermark_color }};
+      " {{ block.shopify_attributes }}>
+        
+        <!-- Background Image (Optional) -->
+        {%- if card_image != blank -%}
+          <img src="{{ card_image | image_url: width: 800 }}" 
+               alt="{{ card_image.alt | default: card_title | escape }}" 
+               class="collection-card__image-{{ section.id }}" 
+               loading="lazy"
+               width="{{ card_image.width | default: 800 }}"
+               height="{{ card_image.height | default: 1000 }}">
+          <div class="collection-card__overlay-{{ section.id }}"></div>
+        {%- endif -%}
+
+        <!-- Background Watermark Text -->
+        {%- if block.settings.watermark_text != blank -%}
+          <div class="collection-card__watermark-{{ section.id }}">{{ block.settings.watermark_text | escape }}</div>
+        {%- endif -%}
+
+        <!-- Pattern Overlay -->
+        {%- if block.settings.pattern_type != 'none' -%}
+          <div class="collection-card__pattern-{{ section.id }} pattern-{{ block.settings.pattern_type }}-{{ section.id }}"></div>
+        {%- endif -%}
+
+        <!-- Content (Bottom Left) -->
+        <div class="collection-card__content-{{ section.id }}">
+          {%- if block.settings.subtitle != blank -%}
+            <span class="collection-card__subtitle-{{ section.id }}">{{ block.settings.subtitle | escape }}</span>
+          {%- endif -%}
+          <h3 class="collection-card__title-{{ section.id }}">{{ card_title | escape }}</h3>
+          
+          <div class="collection-card__link-{{ section.id }}">
+            <span>{{ block.settings.link_text | escape }}</span>
+            <span class="collection-card__link-arrow-{{ section.id }}">
+              <svg viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 1L13 5M13 5L9 9M13 5H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+      </a>
+    {%- endfor -%}
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Featured Collections Grid",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "Full Width Layout"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Section Subheading",
+      "default": "SHOP BY CATEGORY"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Heading",
+      "default": "COLLECTIONS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "Show 'View All' Button"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Button Text",
+      "default": "VIEW ALL"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    },
+    {
+      "type": "header",
+      "content": "Layout Customization"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "Columns on Desktop"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "options": [
+        {
+          "value": "slider",
+          "label": "Swipe Slider (Mobile)"
+        },
+        {
+          "value": "grid-2",
+          "label": "2 Columns Grid"
+        },
+        {
+          "value": "grid-1",
+          "label": "1 Column Stacked"
+        }
+      ],
+      "default": "slider",
+      "label": "Mobile Layout"
+    },
+    {
+      "type": "select",
+      "id": "card_aspect_ratio",
+      "options": [
+        {
+          "value": "3/4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "2/3",
+          "label": "Tall (2:3)"
+        },
+        {
+          "value": "1/1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "350px",
+          "label": "Fixed Height (350px)"
+        },
+        {
+          "value": "450px",
+          "label": "Fixed Height (450px)"
+        }
+      ],
+      "default": "3/4",
+      "label": "Card Aspect Ratio"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 8,
+      "label": "Card Corner Radius"
+    },
+    {
+      "type": "header",
+      "content": "Spacings & Padding"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 20,
+      "label": "Grid Gap (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 8,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 16,
+      "label": "Grid Gap (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 50,
+      "label": "Padding Top (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 50,
+      "label": "Padding Bottom (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 30,
+      "label": "Padding Top (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 30,
+      "label": "Padding Bottom (Mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Color Schemes"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "section_text_color",
+      "label": "Section Headings Color",
+      "default": "#0b1220"
+    },
+    {
+      "type": "color",
+      "id": "section_subheading_color",
+      "label": "Section Subheading Color",
+      "default": "#8892a0"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Collection Card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        },
+        {
+          "type": "header",
+          "content": "Card Content Customizations"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Card Image",
+          "info": "Overrides the Shopify collection featured image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom Title",
+          "info": "Leave blank to use Collection title"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Card Subheading",
+          "default": "COLLECTION"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "CTA Link Text",
+          "default": "SHOP"
+        },
+        {
+          "type": "url",
+          "id": "custom_link",
+          "label": "Custom Link URL",
+          "info": "Overrides the default Shopify collection URL"
+        },
+        {
+          "type": "header",
+          "content": "Styling & Gradient (If No Image)"
+        },
+        {
+          "type": "color_background",
+          "id": "bg_color_gradient",
+          "label": "Gradient Background",
+          "info": "Used as background when no image is loaded"
+        },
+        {
+          "type": "color",
+          "id": "bg_color_fallback",
+          "label": "Solid Background Color",
+          "default": "#0b1220"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Title & CTA Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "subheading_color",
+          "label": "Subheading Color",
+          "default": "#5fa6eb"
+        },
+        {
+          "type": "header",
+          "content": "Design Overlay Patterns"
+        },
+        {
+          "type": "select",
+          "id": "pattern_type",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "diagonal",
+              "label": "Diagonal Stripes"
+            },
+            {
+              "value": "horizontal",
+              "label": "Horizontal Lines"
+            },
+            {
+              "value": "dot-grid",
+              "label": "Dotted Grid"
+            },
+            {
+              "value": "grid",
+              "label": "Grid Lines"
+            }
+          ],
+          "default": "diagonal",
+          "label": "Background Pattern Type"
+        },
+        {
+          "type": "range",
+          "id": "pattern_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 20,
+          "label": "Pattern Opacity"
+        },
+        {
+          "type": "header",
+          "content": "Watermark Background Text"
+        },
+        {
+          "type": "text",
+          "id": "watermark_text",
+          "label": "Watermark Text",
+          "info": "Displays giant transparent text in card center (e.g., 'SALE')"
+        },
+        {
+          "type": "color",
+          "id": "watermark_color",
+          "label": "Watermark Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "range",
+          "id": "watermark_opacity",
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "unit": "%",
+          "default": 4,
+          "label": "Watermark Opacity"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections Grid Section",
+      "blocks": [
+        {
+          "type": "collection_card",
+          "settings": {
+            "title": "T-SHIRTS",
+            "subtitle": "COLLECTION",
+            "bg_color_gradient": "linear-gradient(180deg, #132742 0%, #0a1729 100%)",
+            "bg_color_fallback": "#132742",
+            "subheading_color": "#5fa6eb",
+            "pattern_type": "diagonal",
+            "pattern_opacity": 30
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "title": "JEANS",
+            "subtitle": "COLLECTION",
+            "bg_color_gradient": "linear-gradient(180deg, #0f1c30 0%, #070e1a 100%)",
+            "bg_color_fallback": "#0f1c30",
+            "subheading_color": "#4b7fbf",
+            "pattern_type": "diagonal",
+            "pattern_opacity": 20
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "title": "HOODIES",
+            "subtitle": "COLLECTION",
+            "bg_color_gradient": "linear-gradient(180deg, #102e5c 0%, #061633 100%)",
+            "bg_color_fallback": "#102e5c",
+            "subheading_color": "#5e9bf5",
+            "pattern_type": "horizontal",
+            "pattern_opacity": 25
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "title": "SALE",
+            "subtitle": "UP TO 50% OFF",
+            "bg_color_gradient": "linear-gradient(180deg, #2b260f 0%, #121006 100%)",
+            "bg_color_fallback": "#2b260f",
+            "subheading_color": "#e6c645",
+            "pattern_type": "dot-grid",
+            "pattern_opacity": 35,
+            "watermark_text": "SALE",
+            "watermark_color": "#e6c645",
+            "watermark_opacity": 4
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

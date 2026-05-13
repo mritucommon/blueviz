@@ -80,6 +80,89 @@
         "custom_separator_color": "#5b6c8f"
       }
     },
+    "collections-grid": {
+      "type": "collections-grid",
+      "blocks": {
+        "card_1": {
+          "type": "collection_card",
+          "settings": {
+            "title": "T-SHIRTS",
+            "subtitle": "COLLECTION",
+            "bg_color_gradient": "linear-gradient(180deg, #132742 0%, #0a1729 100%)",
+            "bg_color_fallback": "#132742",
+            "subheading_color": "#5fa6eb",
+            "pattern_type": "diagonal",
+            "pattern_opacity": 30
+          }
+        },
+        "card_2": {
+          "type": "collection_card",
+          "settings": {
+            "title": "JEANS",
+            "subtitle": "COLLECTION",
+            "bg_color_gradient": "linear-gradient(180deg, #0f1c30 0%, #070e1a 100%)",
+            "bg_color_fallback": "#0f1c30",
+            "subheading_color": "#4b7fbf",
+            "pattern_type": "diagonal",
+            "pattern_opacity": 20
+          }
+        },
+        "card_3": {
+          "type": "collection_card",
+          "settings": {
+            "title": "HOODIES",
+            "subtitle": "COLLECTION",
+            "bg_color_gradient": "linear-gradient(180deg, #102e5c 0%, #061633 100%)",
+            "bg_color_fallback": "#102e5c",
+            "subheading_color": "#5e9bf5",
+            "pattern_type": "horizontal",
+            "pattern_opacity": 25
+          }
+        },
+        "card_4": {
+          "type": "collection_card",
+          "settings": {
+            "title": "SALE",
+            "subtitle": "UP TO 50% OFF",
+            "bg_color_gradient": "linear-gradient(180deg, #2b260f 0%, #121006 100%)",
+            "bg_color_fallback": "#2b260f",
+            "subheading_color": "#e6c645",
+            "pattern_type": "dot-grid",
+            "pattern_opacity": 35,
+            "watermark_text": "SALE",
+            "watermark_color": "#e6c645",
+            "watermark_opacity": 4
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4"
+      ],
+      "settings": {
+        "full_width": false,
+        "subheading": "SHOP BY CATEGORY",
+        "title": "COLLECTIONS",
+        "show_view_all": true,
+        "view_all_text": "VIEW ALL",
+        "view_all_link": "shopify://collections",
+        "columns_desktop": 4,
+        "mobile_layout": "slider",
+        "card_aspect_ratio": "3/4",
+        "card_border_radius": 8,
+        "gap_desktop": 20,
+        "gap_mobile": 16,
+        "padding_top_desktop": 50,
+        "padding_bottom_desktop": 50,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "section_bg": "#ffffff",
+        "section_text_color": "#0b1220",
+        "section_subheading_color": "#8892a0"
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -189,6 +272,7 @@
   "order": [
     "hero-split",
     "scrolling-ticker",
+    "collections-grid",
     "featured_collection",
     "f1552b18-6017-4231-810d-74e61da22c37",
     "38cdf60f-e431-43b5-aac3-7e6215447d67"
