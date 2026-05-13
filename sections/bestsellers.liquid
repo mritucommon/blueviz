@@ -1,0 +1,785 @@
+{%- style -%}
+  .bestsellers-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    background-color: {{ section.settings.section_bg }};
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  @media screen and (min-width: 750px) {
+    .bestsellers-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+  }
+
+  .bestsellers__header-{{ section.id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+    gap: 20px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .bestsellers__header-{{ section.id }} {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      gap: 15px;
+    }
+  }
+
+  .bestsellers__title-group-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .bestsellers__subheading-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: {{ section.settings.section_subheading_color }};
+  }
+
+  .bestsellers__title-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(32px, 4.5vw, 48px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: {{ section.settings.section_text_color }};
+    margin: 0;
+  }
+
+  /* View All Button */
+  .bestsellers__btn-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 12px 28px;
+    border: 1px solid {{ section.settings.section_text_color }};
+    color: {{ section.settings.section_text_color }};
+    background-color: transparent;
+    transition: all 0.25s ease;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .bestsellers__btn-{{ section.id }}:hover {
+    background-color: {{ section.settings.section_text_color }};
+    color: {{ section.settings.section_bg }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .bestsellers__btn-{{ section.id }} {
+      align-self: stretch;
+      text-align: center;
+    }
+  }
+
+  /* Grid Layout */
+  .bestsellers__container-{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    gap: {{ section.settings.gap_desktop }}px;
+  }
+
+  /* Mobile Swipe Slider & Responsive Grids */
+  @media screen and (max-width: 749px) {
+    .bestsellers__container-{{ section.id }}--mobile-slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: {{ section.settings.gap_mobile }}px;
+      margin-left: -20px;
+      margin-right: -20px;
+      padding-left: 20px;
+      padding-right: 20px;
+      scrollbar-width: none; /* Firefox */
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .bestsellers__container-{{ section.id }}--mobile-slider::-webkit-scrollbar {
+      display: none; /* Safari and Chrome */
+    }
+
+    .bestsellers__container-{{ section.id }}--mobile-slider .bestseller-card-{{ section.id }} {
+      flex: 0 0 78%;
+      scroll-snap-align: start;
+    }
+
+    .bestsellers__container-{{ section.id }}--mobile-grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: {{ section.settings.gap_mobile }}px;
+    }
+
+    .bestsellers__container-{{ section.id }}--mobile-grid-1 {
+      grid-template-columns: minmax(0, 1fr);
+      gap: {{ section.settings.gap_mobile }}px;
+    }
+  }
+
+  /* Product Card Base Styling */
+  .bestseller-card-{{ section.id }} {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    z-index: 1;
+    box-sizing: border-box;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  /* Card Hover */
+  .bestseller-card-{{ section.id }}:hover {
+    transform: translateY(-6px);
+  }
+
+  /* Card Media Container */
+  .bestseller-card__media-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: {{ section.settings.card_border_radius }}px;
+    background: #0B1220;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+    
+    /* Aspect Ratio Handling */
+    {% if section.settings.card_aspect_ratio == '3/4' %}
+      aspect-ratio: 3/4;
+    {% elsif section.settings.card_aspect_ratio == '2/3' %}
+      aspect-ratio: 2/3;
+    {% elsif section.settings.card_aspect_ratio == '1/1' %}
+      aspect-ratio: 1/1;
+    {% else %}
+      height: {{ section.settings.card_aspect_ratio }};
+    {% endif %}
+  }
+
+  @media screen and (max-width: 480px) {
+    .bestseller-card__media-{{ section.id }} {
+      {% if section.settings.card_aspect_ratio == '3/4' or section.settings.card_aspect_ratio == '2/3' %}
+        aspect-ratio: 0.75;
+      {% endif %}
+    }
+  }
+
+  /* Image Transitions */
+  .bestseller-card__img-{{ section.id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease;
+  }
+
+  .bestseller-card__img-{{ section.id }}--secondary {
+    opacity: 0;
+    z-index: 2;
+  }
+
+  .bestseller-card-{{ section.id }}:hover .bestseller-card__img-{{ section.id }}--primary {
+    transform: scale(1.05);
+  }
+
+  .bestseller-card-{{ section.id }}:hover .bestseller-card__img-{{ section.id }}--secondary {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  /* Placeholder Mode Background */
+  .bestseller-card__bg-placeholder-{{ section.id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .bestseller-card-{{ section.id }}:hover .bestseller-card__bg-placeholder-{{ section.id }} {
+    transform: scale(1.05);
+  }
+
+  /* Badges */
+  .bestseller-card__badge-{{ section.id }} {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    padding: 6px 12px;
+    border-radius: 2px;
+    z-index: 3;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  /* Info / Details Layout */
+  .bestseller-card__info-{{ section.id }} {
+    padding: 16px 0 5px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  /* Color Swatches styling */
+  .bestseller-card__swatches-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 20px;
+  }
+
+  .bestseller-card__swatch-wrapper-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    transition: border-color 0.25s ease;
+    cursor: pointer;
+  }
+
+  .bestseller-card__swatch-wrapper-{{ section.id }}.is-active {
+    border-color: #0B1220;
+  }
+
+  .bestseller-card__swatch-{{ section.id }} {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    display: block;
+    box-sizing: border-box;
+  }
+
+  /* Title styling */
+  .bestseller-card__title-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #0B1220;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .bestseller-card-{{ section.id }}:hover .bestseller-card__title-{{ section.id }} {
+    color: {{ section.settings.section_subheading_color }};
+  }
+
+  /* Price styling */
+  .bestseller-card__price-group-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 2px;
+  }
+
+  .bestseller-card__price-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0B1220;
+  }
+
+  .bestseller-card__price-compare-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    text-decoration: line-through;
+    color: #8892A0;
+    font-weight: 500;
+  }
+{%- endstyle -%}
+
+<div class="bestsellers-{{ section.id }} {% unless section.settings.full_width %}page-width{% endunless %}" id="Bestsellers-{{ section.id }}" {{ section.shopify_attributes }}>
+  
+  <!-- Header Row -->
+  <div class="bestsellers__header-{{ section.id }}">
+    <div class="bestsellers__title-group-{{ section.id }}">
+      {%- if section.settings.subheading != blank -%}
+        <span class="bestsellers__subheading-{{ section.id }}">{{ section.settings.subheading | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="bestsellers__title-{{ section.id }}">{{ section.settings.title }}</h2>
+      {%- endif -%}
+    </div>
+    
+    {%- if section.settings.show_view_all and section.settings.view_all_link != blank -%}
+      <a href="{{ section.settings.view_all_link }}" class="bestsellers__btn-{{ section.id }}">
+        {{ section.settings.view_all_text | default: 'VIEW ALL' | escape }}
+      </a>
+    {%- endif -%}
+  </div>
+
+  <!-- Cards Grid Container -->
+  <div class="bestsellers__container-{{ section.id }} bestsellers__container-{{ section.id }}--mobile-{{ section.settings.mobile_layout }}">
+    
+    {%- liquid
+      assign product_collection = collections[section.settings.collection]
+      assign products_limit = section.settings.products_to_show
+      assign active_products = product_collection.products
+    -%}
+
+    {%- if section.settings.collection != blank and active_products.size > 0 -%}
+      
+      <!-- REAL DYNAMIC MODE -->
+      {%- for product in active_products limit: products_limit -%}
+        <a href="{{ product.url }}" class="bestseller-card-{{ section.id }}" {{ block.shopify_attributes }}>
+          
+          <div class="bestseller-card__media-{{ section.id }}">
+            
+            <!-- Badges -->
+            {%- if product.compare_at_price > product.price -%}
+              <span class="bestseller-card__badge-{{ section.id }}" style="background-color: #e53935;">SALE</span>
+            {%- elsif product.tags contains 'new' or product.tags contains 'New' -%}
+              <span class="bestseller-card__badge-{{ section.id }}" style="background-color: #0B1220;">NEW</span>
+            {%- endif -%}
+
+            <!-- Primary featured image -->
+            {%- if product.featured_image != blank -%}
+              <img src="{{ product.featured_image | image_url: width: 800 }}" 
+                   alt="{{ product.featured_image.alt | default: product.title | escape }}" 
+                   class="bestseller-card__img-{{ section.id }} bestseller-card__img-{{ section.id }}--primary" 
+                   loading="lazy"
+                   width="{{ product.featured_image.width | default: 600 }}"
+                   height="{{ product.featured_image.height | default: 800 }}">
+
+              <!-- Secondary Image on Hover -->
+              {%- if product.images[1] != blank -%}
+                <img src="{{ product.images[1] | image_url: width: 800 }}" 
+                     alt="{{ product.images[1].alt | default: product.title | escape }}" 
+                     class="bestseller-card__img-{{ section.id }} bestseller-card__img-{{ section.id }}--secondary" 
+                     loading="lazy"
+                     width="{{ product.images[1].width | default: 600 }}"
+                     height="{{ product.images[1].height | default: 800 }}">
+              {%- endif -%}
+            {%- else -%}
+              <!-- Fallback placeholder background -->
+              <div style="width: 100%; height: 100%; background: linear-gradient(180deg, #121c2c 0%, #080d16 100%);"></div>
+            {%- endif -%}
+
+          </div>
+
+          <div class="bestseller-card__info-{{ section.id }}">
+            
+            <!-- Color Swatches (Dynamic variant checks) -->
+            {%- liquid
+              assign color_option = nil
+              for option in product.options_with_values
+                assign option_name = option.name | downcase
+                if option_name == 'color' or option_name == 'colour'
+                  assign color_option = option
+                  break
+                endif
+              endfor
+            -%}
+
+            <div class="bestseller-card__swatches-{{ section.id }}">
+              {%- if color_option != nil -%}
+                {%- for value in color_option.values limit: 4 -%}
+                  {%- liquid
+                    assign color_handle = value | handle
+                    assign variant_for_color = nil
+                    for variant in product.variants
+                      if variant.options contains value
+                        assign variant_for_color = variant
+                        break
+                      endif
+                    endfor
+                  -%}
+                  <span class="bestseller-card__swatch-wrapper-{{ section.id }} {% if forloop.first %}is-active{% endif %}">
+                    <span class="bestseller-card__swatch-{{ section.id }}" 
+                          style="background-color: {{ color_handle }};"
+                          {% if variant_for_color.featured_media != blank %}
+                            data-variant-image="{{ variant_for_color.featured_media | image_url: width: 800 }}"
+                          {% endif %}
+                          title="{{ value }}">
+                    </span>
+                  </span>
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
+
+            <!-- Title -->
+            <h3 class="bestseller-card__title-{{ section.id }}">{{ product.title | escape }}</h3>
+            
+            <!-- Prices -->
+            <div class="bestseller-card__price-group-{{ section.id }}">
+              <span class="bestseller-card__price-{{ section.id }}">{{ product.price | money }}</span>
+              {%- if product.compare_at_price > product.price -%}
+                <span class="bestseller-card__price-compare-{{ section.id }}">{{ product.compare_at_price | money }}</span>
+              {%- endif -%}
+            </div>
+
+          </div>
+
+        </a>
+      {%- endfor -%}
+
+    {%- else -%}
+      
+      <!-- DEFAULT PLACEHOLDER MODE (Renders the 4 cards from screenshot perfectly) -->
+      {%- for i in (1..4) -%}
+        {%- liquid
+          case i
+            when 1
+              assign p_title = "GRAPHIC PRINT TEE"
+              assign p_price = "₹799"
+              assign p_compare_price = "₹1,199"
+              assign p_badge = "SALE"
+              assign p_badge_color = "#e53935"
+              assign p_bg = "linear-gradient(180deg, #1b5cb0 0%, #3f8aed 100%)"
+              assign swatch_colors = "#ffffff|#000000|#3f8aed"
+            when 2
+              assign p_title = "STREETWEAR BOMBER"
+              assign p_price = "₹2,499"
+              assign p_compare_price = ""
+              assign p_badge = "NEW"
+              assign p_badge_color = "#0B1220"
+              assign p_bg = "linear-gradient(180deg, #0d1117 0%, #161b22 100%)"
+              assign swatch_colors = "#000000|#b08e51"
+            when 3
+              assign p_title = "RELAXED FIT SHORTS"
+              assign p_price = "₹699"
+              assign p_compare_price = "₹999"
+              assign p_badge = "SALE"
+              assign p_badge_color = "#e53935"
+              assign p_bg = "linear-gradient(180deg, #0f2e5c 0%, #1a437a 100%)"
+              assign swatch_colors = "#3f8aed|#000000|#ffffff"
+            when 4
+              assign p_title = "POLO COLLAR TEE"
+              assign p_price = "₹899"
+              assign p_compare_price = ""
+              assign p_badge = ""
+              assign p_badge_color = ""
+              assign p_bg = "linear-gradient(180deg, #e6edf5 0%, #f0f4f8 100%)"
+              assign swatch_colors = "#ffffff|#0f2e5c|#b08e51"
+          endcase
+        -%}
+
+        <div class="bestseller-card-{{ section.id }}">
+          
+          <div class="bestseller-card__media-{{ section.id }}">
+            {%- if p_badge != blank -%}
+              <span class="bestseller-card__badge-{{ section.id }}" style="background-color: {{ p_badge_color }};">{{ p_badge }}</span>
+            {%- endif -%}
+
+            <!-- Beautiful gradient background representing premium color block -->
+            <div class="bestseller-card__bg-placeholder-{{ section.id }}" style="background: {{ p_bg }}; width: 100%; height: 100%;"></div>
+          </div>
+
+          <div class="bestseller-card__info-{{ section.id }}">
+            
+            <!-- Swatches -->
+            <div class="bestseller-card__swatches-{{ section.id }}">
+              {%- assign swatch_list = swatch_colors | split: '|' -%}
+              {%- for swatch in swatch_list -%}
+                <span class="bestseller-card__swatch-wrapper-{{ section.id }} {% if forloop.first %}is-active{% endif %}">
+                  <span class="bestseller-card__swatch-{{ section.id }}" style="background-color: {{ swatch }};"></span>
+                </span>
+              {%- endfor -%}
+            </div>
+
+            <!-- Title -->
+            <h3 class="bestseller-card__title-{{ section.id }}">{{ p_title }}</h3>
+            
+            <!-- Price Group -->
+            <div class="bestseller-card__price-group-{{ section.id }}">
+              <span class="bestseller-card__price-{{ section.id }}">{{ p_price }}</span>
+              {%- if p_compare_price != blank -%}
+                <span class="bestseller-card__price-compare-{{ section.id }}">{{ p_compare_price }}</span>
+              {%- endif -%}
+            </div>
+
+          </div>
+
+        </div>
+      {%- endfor -%}
+
+    {%- endif -%}
+
+  </div>
+
+</div>
+
+<!-- Client side interactivity for variant image swapping -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.bestseller-card-{{ section.id }} .bestseller-card__swatch-{{ section.id }}').forEach(swatch => {
+      swatch.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const wrapper = this.parentElement;
+        const card = this.closest('.bestseller-card-{{ section.id }}');
+        
+        // Toggle Active Swatch Ring
+        card.querySelectorAll('.bestseller-card__swatch-wrapper-{{ section.id }}').forEach(el => {
+          el.classList.remove('is-active');
+        });
+        wrapper.classList.add('is-active');
+        
+        // Swap Image
+        const newImgSrc = this.getAttribute('data-variant-image');
+        if (newImgSrc) {
+          const primaryImg = card.querySelector('.bestseller-card__img-{{ section.id }}--primary');
+          if (primaryImg) {
+            primaryImg.src = newImgSrc;
+          }
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Bestsellers Grid",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "Full Width Layout"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Section Subheading",
+      "default": "CUSTOMER FAVOURITES"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Heading",
+      "default": "BESTSELLERS"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection",
+      "info": "If left blank or empty, section shows mock products from your screenshot as default."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Products to Show"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "Show 'View All' Button"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Button Text",
+      "default": "VIEW ALL"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    },
+    {
+      "type": "header",
+      "content": "Layout Customizations"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Columns on Desktop"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "options": [
+        {
+          "value": "slider",
+          "label": "Swipe Slider (Mobile)"
+        },
+        {
+          "value": "grid-2",
+          "label": "2 Columns Grid"
+        },
+        {
+          "value": "grid-1",
+          "label": "1 Column Stacked"
+        }
+      ],
+      "default": "slider",
+      "label": "Mobile Layout"
+    },
+    {
+      "type": "select",
+      "id": "card_aspect_ratio",
+      "options": [
+        {
+          "value": "3/4",
+          "label": "Portrait (3:4)"
+        },
+        {
+          "value": "2/3",
+          "label": "Tall (2:3)"
+        },
+        {
+          "value": "1/1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "350px",
+          "label": "Fixed Height (350px)"
+        },
+        {
+          "value": "450px",
+          "label": "Fixed Height (450px)"
+        }
+      ],
+      "default": "3/4",
+      "label": "Card Aspect Ratio"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 4,
+      "label": "Card Corner Radius"
+    },
+    {
+      "type": "header",
+      "content": "Spacings & Padding"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 20,
+      "label": "Grid Gap (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 8,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 16,
+      "label": "Grid Gap (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 50,
+      "label": "Padding Top (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 50,
+      "label": "Padding Bottom (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 30,
+      "label": "Padding Top (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 30,
+      "label": "Padding Bottom (Mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Color Schemes"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "section_text_color",
+      "label": "Section Headings Color",
+      "default": "#0b1220"
+    },
+    {
+      "type": "color",
+      "id": "section_subheading_color",
+      "label": "Section Subheading Color",
+      "default": "#8892a0"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bestsellers Grid"
+    }
+  ]
+}
+{% endschema %}
