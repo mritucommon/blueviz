@@ -234,6 +234,32 @@
         "section_subheading_color": "#8892a0"
       }
     },
+    "new-arrivals": {
+      "type": "new-arrivals",
+      "settings": {
+        "full_width": false,
+        "subheading": "JUST IN",
+        "title": "NEW ARRIVALS",
+        "collection": "",
+        "products_to_show": 4,
+        "show_view_all": true,
+        "view_all_text": "VIEW ALL",
+        "view_all_link": "shopify://collections",
+        "columns_desktop": 4,
+        "mobile_layout": "slider",
+        "card_aspect_ratio": "3/4",
+        "card_border_radius": 8,
+        "gap_desktop": 20,
+        "gap_mobile": 16,
+        "padding_top_desktop": 50,
+        "padding_bottom_desktop": 50,
+        "padding_top_mobile": 30,
+        "padding_bottom_mobile": 30,
+        "section_bg": "#f9f8f6",
+        "section_text_color": "#0b1220",
+        "section_subheading_color": "#8892a0"
+      }
+    },
     "f1552b18-6017-4231-810d-74e61da22c37": {
       "type": "image-with-text",
       "blocks": {
@@ -317,6 +343,7 @@
     "hero-split",
     "scrolling-ticker",
     "collections-grid",
+    "new-arrivals",
     "f1552b18-6017-4231-810d-74e61da22c37",
     "38cdf60f-e431-43b5-aac3-7e6215447d67"
   ]
