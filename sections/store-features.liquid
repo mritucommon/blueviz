@@ -1,0 +1,499 @@
+{%- style -%}
+  .store-features-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    background-color: {{ section.settings.section_bg }};
+    border-top: {{ section.settings.border_top }}px solid {{ section.settings.border_color }};
+    border-bottom: {{ section.settings.border_bottom }}px solid {{ section.settings.border_color }};
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 750px) {
+    .store-features-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+  }
+
+  .store-features__wrapper-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 20px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .store-features__wrapper-{{ section.id }} {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px 20px;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .store-features__wrapper-{{ section.id }} {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+    }
+  }
+
+  .store-features__item-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 220px;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  {% if section.settings.show_dividers %}
+    @media screen and (min-width: 990px) {
+      .store-features__item-{{ section.id }}:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        right: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 32px;
+        background-color: {{ section.settings.divider_color }};
+      }
+    }
+  {% endif %}
+
+  @media screen and (max-width: 576px) {
+    .store-features__item-{{ section.id }} {
+      width: 100%;
+    }
+  }
+
+  .store-features__icon-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: {{ section.settings.icon_box_size }}px;
+    height: {{ section.settings.icon_box_size }}px;
+    border-radius: {{ section.settings.icon_box_radius }}px;
+    background-color: {{ section.settings.icon_bg_color }};
+    color: {{ section.settings.icon_color }};
+    flex-shrink: 0;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+
+  .store-features__item-{{ section.id }}:hover .store-features__icon-{{ section.id }} {
+    transform: scale(1.08);
+    background-color: {{ section.settings.icon_bg_hover_color | default: section.settings.icon_bg_color }};
+  }
+
+  .store-features__icon-{{ section.id }} svg {
+    width: {{ section.settings.icon_size }}px;
+    height: {{ section.settings.icon_size }}px;
+    stroke-width: 1.8;
+  }
+
+  .store-features__content-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .store-features__title-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: {{ section.settings.title_font_size }}px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: {{ section.settings.title_color }};
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .store-features__subtext-{{ section.id }} {
+    font-family: var(--font-body-family, sans-serif);
+    font-size: {{ section.settings.subtext_font_size }}px;
+    color: {{ section.settings.subtext_color }};
+    margin: 0;
+    line-height: 1.4;
+  }
+{%- endstyle -%}
+
+<div class="store-features-{{ section.id }} {% unless section.settings.full_width %}page-width{% endunless %}" id="StoreFeatures-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="store-features__wrapper-{{ section.id }}">
+    {%- for block in section.blocks -%}
+      <div class="store-features__item-{{ section.id }}" {{ block.shopify_attributes }}>
+        <div class="store-features__icon-{{ section.id }}">
+          {%- if block.settings.custom_image != blank -%}
+            <img src="{{ block.settings.custom_image | image_url: width: 100 }}" 
+                 alt="{{ block.settings.title | escape }}" 
+                 width="{{ section.settings.icon_size }}" 
+                 height="{{ section.settings.icon_size }}"
+                 style="object-fit: contain;"
+                 loading="lazy">
+          {%- else -%}
+            {%- case block.settings.icon -%}
+              {%- when 'truck' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 3h12v12H3V3z" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M15 7h4l3 4v4h-7V7z" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="7" cy="18" r="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="17" cy="18" r="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M1 12h2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {%- when 'returns' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M3 3v5h5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {%- when 'shield' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4z" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {%- when 'cash' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="6" width="20" height="12" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="12" cy="12" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M18 12h.01M6 12h.01" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {%- when 'tag' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="7" y1="7" x2="7.01" y2="7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {%- when 'headset' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 3a9 9 0 0 0-9 9v3a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H5a7 7 0 0 1 14 0h-2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-3a9 9 0 0 0-9-9z" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {%- when 'heart' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              {%- when 'star' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            {%- endcase -%}
+          {%- endif -%}
+        </div>
+
+        <div class="store-features__content-{{ section.id }}">
+          <h3 class="store-features__title-{{ section.id }}">{{ block.settings.title | escape }}</h3>
+          {%- if block.settings.subtext != blank -%}
+            <p class="store-features__subtext-{{ section.id }}">{{ block.settings.subtext | escape }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Store Features",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "Full Width Section"
+    },
+    {
+      "type": "header",
+      "content": "Icon Styling"
+    },
+    {
+      "type": "range",
+      "id": "icon_box_size",
+      "min": 30,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48,
+      "label": "Icon Box Size"
+    },
+    {
+      "type": "range",
+      "id": "icon_box_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12,
+      "label": "Icon Box Corner Radius"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 22,
+      "label": "Icon SVG Size"
+    },
+    {
+      "type": "color",
+      "id": "icon_bg_color",
+      "label": "Icon Box Background",
+      "default": "#f4f5f7"
+    },
+    {
+      "type": "color",
+      "id": "icon_bg_hover_color",
+      "label": "Icon Box Hover Background",
+      "default": "#e6edf5"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon SVG Color",
+      "default": "#0b1220"
+    },
+    {
+      "type": "header",
+      "content": "Typography & Colors"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13,
+      "label": "Title Font Size"
+    },
+    {
+      "type": "range",
+      "id": "subtext_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "label": "Subtext Font Size"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#0b1220"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext Color",
+      "default": "#8892a0"
+    },
+    {
+      "type": "header",
+      "content": "Dividers"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dividers",
+      "default": true,
+      "label": "Show Vertical Dividers on Desktop"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider Line Color",
+      "default": "#e5e8ec"
+    },
+    {
+      "type": "header",
+      "content": "Section Background & Borders"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "border_top",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 1,
+      "label": "Top Border Width"
+    },
+    {
+      "type": "range",
+      "id": "border_bottom",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 1,
+      "label": "Bottom Border Width"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#f0f2f5"
+    },
+    {
+      "type": "header",
+      "content": "Spacings & Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40,
+      "label": "Padding Top (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40,
+      "label": "Padding Bottom (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 25,
+      "label": "Padding Top (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 25,
+      "label": "Padding Bottom (Mobile)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Select Icon",
+          "options": [
+            {
+              "value": "truck",
+              "label": "Delivery Truck"
+            },
+            {
+              "value": "returns",
+              "label": "Return Arrow"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "cash",
+              "label": "Cash / Banknote"
+            },
+            {
+              "value": "tag",
+              "label": "Price Tag"
+            },
+            {
+              "value": "headset",
+              "label": "Headset / Support"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Icon Image",
+          "info": "Optional. Overrides the SVG icon above."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "FREE DELIVERY"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "Orders above ₹999"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Store Features",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "truck",
+            "title": "FREE DELIVERY",
+            "subtext": "Orders above ₹999"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "returns",
+            "title": "EASY RETURNS",
+            "subtext": "30-day hassle free"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "SECURE PAYMENT",
+            "subtext": "100% protected"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "cash",
+            "title": "CASH ON DELIVERY",
+            "subtext": "Available pan-India"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
