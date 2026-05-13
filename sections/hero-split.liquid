@@ -1,0 +1,403 @@
+<div class="hero-split">
+  <div class="hero-split__container">
+    
+    <!-- Left Column: Content -->
+    <div class="hero-split__content">
+      <div class="hero-split__content-inner">
+        
+        <!-- Badge row -->
+        <div class="hero-split__badges">
+          {%- if section.settings.subheading_left != blank -%}
+            <span class="hero-split__badge hero-split__badge--dark">{{ section.settings.subheading_left | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.subheading_right != blank -%}
+            <span class="hero-split__badge hero-split__badge--blue">{{ section.settings.subheading_right | escape }}</span>
+          {%- endif -%}
+        </div>
+        
+        <!-- Main Heading -->
+        <h1 class="hero-split__heading">
+          {%- if section.settings.heading_line_1 != blank -%}
+            <span class="dark">{{ section.settings.heading_line_1 | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.heading_line_2 != blank -%}
+            <span class="blue">{{ section.settings.heading_line_2 | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.heading_line_3 != blank -%}
+            <span class="dark">{{ section.settings.heading_line_3 | escape }}</span>
+          {%- endif -%}
+        </h1>
+        
+        <!-- Sub-paragraph -->
+        <div class="hero-split__text">
+          {{ section.settings.text }}
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="hero-split__buttons">
+          {%- if section.settings.button_1_text != blank -%}
+            <a href="{{ section.settings.button_1_link | default: '#' }}" class="hero-split__button hero-split__button--primary">
+              {{ section.settings.button_1_text | escape }}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.button_2_text != blank -%}
+            <a href="{{ section.settings.button_2_link | default: '#' }}" class="hero-split__button hero-split__button--secondary">
+              {{ section.settings.button_2_text | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+        
+      </div>
+    </div>
+    
+    <!-- Right Column: Visual Graphic -->
+    <div class="hero-split__visual">
+      <!-- Grid pattern overlay -->
+      <div class="hero-split__visual-grid"></div>
+      
+      <div class="hero-split__visual-badge-container">
+        <!-- Giant Faint background BB -->
+        <div class="hero-split__visual-giant-bg">BB</div>
+        
+        <!-- Floating blue logo badge -->
+        <div class="hero-split__visual-badge">
+          <div class="badge-text">BB</div>
+        </div>
+        
+        <!-- Brand label below -->
+        <div class="hero-split__visual-label">
+          {{ section.settings.visual_label | escape }}
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<style>
+  .hero-split {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFFF;
+    overflow: hidden;
+  }
+  
+  .hero-split__container {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: calc(100vh - 120px);
+  }
+  
+  @media screen and (min-width: 750px) {
+    .hero-split__container {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* Left Column Styling */
+  .hero-split__content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 60px 20px;
+    background-color: #FFFFFF;
+  }
+  
+  @media screen and (min-width: 750px) {
+    .hero-split__content {
+      padding: 80px 8% 80px 10%;
+    }
+  }
+  
+  .hero-split__content-inner {
+    max-width: 580px;
+    width: 100%;
+  }
+  
+  /* Badges */
+  .hero-split__badges {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+  }
+  .hero-split__badge {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .hero-split__badge--dark {
+    color: #5E6675;
+  }
+  .hero-split__badge--blue {
+    color: #1E88E5;
+  }
+  
+  /* Main Heading */
+  .hero-split__heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(44px, 5.5vw, 76px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0 0 25px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .hero-split__heading span {
+    display: block;
+  }
+  .hero-split__heading span.dark {
+    color: #0B1220;
+  }
+  .hero-split__heading span.blue {
+    color: #1E88E5;
+  }
+  
+  /* Text Description */
+  .hero-split__text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #8892A0;
+    margin-bottom: 35px;
+  }
+  .hero-split__text p {
+    margin: 0 0 8px 0;
+  }
+  .hero-split__text p:last-child {
+    margin: 0;
+  }
+  
+  /* Buttons */
+  .hero-split__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .hero-split__button {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 36px;
+    border-radius: 4px;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 190px;
+    cursor: pointer;
+  }
+  .hero-split__button--primary {
+    background-color: #0B1220;
+    color: #FFFFFF;
+    border: 1px solid #0B1220;
+  }
+  .hero-split__button--primary:hover {
+    background-color: #1E88E5;
+    border-color: #1E88E5;
+  }
+  .hero-split__button--secondary {
+    background-color: #FFFFFF;
+    color: #0B1220;
+    border: 1px solid #0B1220;
+  }
+  .hero-split__button--secondary:hover {
+    border-color: #1E88E5;
+    color: #1E88E5;
+    background-color: #F8F9FB;
+  }
+  
+  /* Right Column: Visual Graphic */
+  .hero-split__visual {
+    background-color: #0B1220;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    padding: 60px;
+    overflow: hidden;
+  }
+  
+  @media screen and (min-width: 750px) {
+    .hero-split__visual {
+      min-height: auto;
+    }
+  }
+  
+  /* Grid Pattern overlay */
+  .hero-split__visual-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: 50px 50px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    pointer-events: none;
+  }
+  
+  /* Visual Badge Container */
+  .hero-split__visual-badge-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  
+  /* Giant Faint BB background */
+  .hero-split__visual-giant-bg {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(160px, 22vw, 320px);
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.015);
+    letter-spacing: -0.05em;
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+  }
+  
+  /* Floating blue badge */
+  .hero-split__visual-badge {
+    width: 96px;
+    height: 96px;
+    background-color: #1E88E5; /* Royal blue */
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 35px rgba(30, 136, 229, 0.25);
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 2;
+    animation: float-badge 6s ease-in-out infinite;
+  }
+  
+  .hero-split__visual-badge .badge-text {
+    font-family: 'Outfit', sans-serif;
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 34px;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+  
+  /* Brand label below */
+  .hero-split__visual-label {
+    font-family: 'Outfit', sans-serif;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* Floating micro-animation */
+  @keyframes float-badge {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Split Screen",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading_left",
+      "label": "Subheading Left",
+      "default": "SUMMER 2026"
+    },
+    {
+      "type": "text",
+      "id": "subheading_right",
+      "label": "Subheading Right",
+      "default": "NEW COLLECTION"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading Line 1",
+      "default": "DRESS"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading Line 2 (Blue)",
+      "default": "BOLD."
+    },
+    {
+      "type": "text",
+      "id": "heading_line_3",
+      "label": "Heading Line 3",
+      "default": "LIVE FREE."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description",
+      "default": "<p>Premium streetwear built for the modern generation.</p><p>Quality in every thread.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_1_text",
+      "label": "Button 1 Text",
+      "default": "SHOP NEW ARRIVALS"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Button 2 Text",
+      "default": "ALL COLLECTIONS"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 Link"
+    },
+    {
+      "type": "text",
+      "id": "visual_label",
+      "label": "Visual Label Text",
+      "default": "BLUEBIZ · EST. 2024"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Split Screen"
+    }
+  ]
+}
+{% endschema %}
