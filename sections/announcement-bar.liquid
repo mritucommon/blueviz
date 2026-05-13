@@ -8,7 +8,20 @@
           {%- endif -%}
               <div class="page-width">
                 <p class="announcement-bar__message {{ block.settings.text_alignment }} h5">
-                  <span>{{ block.settings.text | escape }}</span>
+                  {%- if block.settings.text contains '·' or block.settings.text contains '•' or block.settings.text contains '-' -%}
+                    {%- assign split_char = '·' -%}
+                    {%- if block.settings.text contains '•' -%}{%- assign split_char = '•' -%}{%- endif -%}
+                    {%- if block.settings.text contains ' - ' -%}{%- assign split_char = ' - ' -%}{%- endif -%}
+                    {%- assign parts = block.settings.text | split: split_char -%}
+                    {%- for part in parts -%}
+                      <span class="announcement-item">{{ part | strip }}</span>
+                      {%- unless forloop.last -%}
+                        <span class="announcement-divider">&middot;</span>
+                      {%- endunless -%}
+                    {%- endfor -%}
+                  {%- else -%}
+                    <span>{{ block.settings.text | escape }}</span>
+                  {%- endif -%}
                   {%- if block.settings.link != blank -%}
                     {% render 'icon-arrow' %}
                   {%- endif -%}
@@ -21,6 +34,39 @@
       </div>
   {%- endcase -%}
 {%- endfor -%}
+
+<style>
+  .announcement-bar {
+    background-color: #0B1220 !important; /* Premium Dark Navy */
+    background-image: none !important;
+    padding: 10px 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .announcement-bar__message {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: #FFFFFF !important;
+    margin: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 15px !important;
+    flex-wrap: wrap !important;
+    line-height: 1.4 !important;
+  }
+  .announcement-item {
+    display: inline-block !important;
+    white-space: nowrap !important;
+  }
+  .announcement-divider {
+    color: rgba(255, 255, 255, 0.4) !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+  }
+</style>
 
 {% schema %}
 {

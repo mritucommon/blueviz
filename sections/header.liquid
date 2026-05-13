@@ -89,7 +89,152 @@
       padding-top: 0.5rem;
     }
   }
+
+  /* Custom Outfit Typography & General Reset */
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap');
+  
+  /* Header Layout */
+  @media screen and (min-width: 990px) {
+    .header--middle-left {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      gap: 30px !important;
+    }
+    .header--middle-left .header__heading {
+      flex: 1 1 0% !important;
+      display: flex !important;
+      justify-content: flex-start !important;
+      margin: 0 !important;
+    }
+    .header--middle-left .header__inline-menu {
+      flex: 0 0 auto !important;
+      display: flex !important;
+      justify-content: center !important;
+    }
+    .header--middle-left .header__icons {
+      flex: 1 1 0% !important;
+      display: flex !important;
+      justify-content: flex-end !important;
+    }
+  }
+
+  /* BlueBiz Custom HTML/CSS Logo */
+  .bluebiz-custom-logo {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    text-decoration: none !important;
+  }
+  .bluebiz-custom-logo .logo-icon {
+    background-color: #0B1220 !important;
+    color: #FFFFFF !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 14px !important;
+    letter-spacing: -0.05em !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+    line-height: 1 !important;
+  }
+  .bluebiz-custom-logo .logo-text {
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 22px !important;
+    letter-spacing: 0.02em !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+  }
+  .bluebiz-custom-logo .logo-text .blue {
+    color: #0B1220 !important;
+  }
+  .bluebiz-custom-logo .logo-text .biz {
+    color: #1E88E5 !important; /* Vibrant royal blue */
+  }
+
+  /* Menu Navigation styling */
+  .header__menu-item {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: #5E6675 !important;
+    padding: 8px 16px !important;
+    transition: color 0.2s ease, border-color 0.2s ease !important;
+    position: relative !important;
+  }
+  .header__menu-item:hover {
+    color: #0B1220 !important;
+  }
+  
+  /* Active Link custom styling with underline spacing */
+  .header__menu-item .header__active-menu-item {
+    text-decoration: none !important;
+    color: #0B1220 !important;
+    font-weight: 700 !important;
+    border-bottom: 2.5px solid #0B1220 !important;
+    padding-bottom: 5px !important;
+    border-radius: 1px !important;
+  }
+
+  /* Menu SALE item highlight */
+  .menu-item-sale {
+    color: #C29B38 !important; /* Premium gold */
+    font-weight: 700 !important;
+  }
+  .menu-item-sale:hover {
+    color: #A37E2C !important;
+  }
+
+  /* Icons styling */
+  .header__icons {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+  .header__icon {
+    color: #0B1220 !important;
+    transition: color 0.2s ease !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .header__icon:hover {
+    color: #1E88E5 !important;
+  }
+  .header__icon svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  /* Cart Badge */
+  .cart-count-bubble {
+    background-color: #1E88E5 !important; /* Vibrant blue badge */
+    color: #FFFFFF !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: absolute !important;
+    top: 3px !important;
+    right: 3px !important;
+    border: 2px solid #FFFFFF !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+  }
 </style>
+
 
 {%- style -%}
   .header {
@@ -454,7 +599,12 @@
                 }}
               </div>
             {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
+              <div class="bluebiz-custom-logo">
+                <div class="logo-icon">BB</div>
+                <div class="logo-text">
+                  <span class="blue">BLUE</span><span class="biz">BIZ</span>
+                </div>
+              </div>
             {%- endif -%}
           </a>
       {%- if request.page_type == 'index' -%}
@@ -472,7 +622,8 @@
                   <header-menu>
                     <details id="Details-HeaderMenu-{{ forloop.index }}">
                       <summary class="header__menu-item list-menu__item link focus-inset">
-                        <span {%- if link.child_active %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+                        {%- assign link_title_downcase = link.title | downcase -%}
+                        <span class="{% if link.child_active %}header__active-menu-item {% endif %}{% if link_title_downcase == 'sale' %}menu-item-sale{% endif %}">{{ link.title | escape }}</span>
                         {% render 'icon-caret' %}
                       </summary>
                       <ul id="HeaderMenu-MenuList-{{ forloop.index }}" class="header__submenu list-menu list-menu--disclosure gradient caption-large motion-reduce global-settings-popup" role="list" tabindex="-1">
@@ -506,7 +657,8 @@
                   </header-menu>
                 {%- else -%}
                   <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset"{% if link.current %} aria-current="page"{% endif %}>
-                    <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+                    {%- assign link_title_downcase = link.title | downcase -%}
+                    <span class="{% if link.current %}header__active-menu-item {% endif %}{% if link_title_downcase == 'sale' %}menu-item-sale{% endif %}">{{ link.title | escape }}</span>
                   </a>
                 {%- endif -%}
               </li>
@@ -522,7 +674,8 @@
                   <header-menu>
                     <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
                       <summary class="header__menu-item list-menu__item link focus-inset">
-                        <span {%- if link.child_active %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+                        {%- assign link_title_downcase = link.title | downcase -%}
+                        <span class="{% if link.child_active %}header__active-menu-item {% endif %}{% if link_title_downcase == 'sale' %}menu-item-sale{% endif %}">{{ link.title | escape }}</span>
                         {% render 'icon-caret' %}
                       </summary>
                       <div id="MegaMenu-Content-{{ forloop.index }}" class="mega-menu__content gradient motion-reduce global-settings-popup" tabindex="-1">
@@ -551,7 +704,8 @@
                   </header-menu>
                 {%- else -%}
                   <a href="{{ link.url }}" class="header__menu-item list-menu__item link link--text focus-inset"{% if link.current %} aria-current="page"{% endif %}>
-                    <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+                    {%- assign link_title_downcase = link.title | downcase -%}
+                    <span class="{% if link.current %}header__active-menu-item {% endif %}{% if link_title_downcase == 'sale' %}menu-item-sale{% endif %}">{{ link.title | escape }}</span>
                   </a>
                 {%- endif -%}
               </li>
@@ -583,7 +737,12 @@
                 }}
               </div>
             {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
+              <div class="bluebiz-custom-logo">
+                <div class="logo-icon">BB</div>
+                <div class="logo-text">
+                  <span class="blue">BLUE</span><span class="biz">BIZ</span>
+                </div>
+              </div>
             {%- endif -%}
           </a>
       {%- if request.page_type == 'index' -%}
@@ -718,6 +877,13 @@
             {% render block %}
         {%- endcase -%}
       {%- endfor -%}
+
+      <a href="/pages/wishlist" class="header__icon header__icon--wishlist link focus-inset">
+        <svg class="icon icon-heart" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        <span class="visually-hidden">Wishlist</span>
+      </a>
 
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
         {%- liquid
