@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero-split": {
@@ -8,67 +17,18 @@
         "heading_line_1": "DRESS",
         "heading_line_2": "BOLD.",
         "heading_line_3": "LIVE FREE.",
-        "text": "<p>Premium streetwear built for the modern generation.<\/p><p>Quality in every thread.<\/p>",
+        "text": "<p>Premium streetwear built for the modern generation.</p><p>Quality in every thread.</p>",
         "button_1_text": "SHOP NEW ARRIVALS",
-        "button_1_link": "shopify:\/\/collections\/all",
+        "button_1_link": "shopify://collections/all",
         "button_2_text": "ALL COLLECTIONS",
-        "button_2_link": "shopify:\/\/collections",
+        "button_2_link": "shopify://collections",
         "visual_label": "BLUEBIZ · EST. 2024"
-      }
-    },
-    "6a3bb789-ce10-45f5-ae67-e2063ef8c76b": {
-      "type": "image-banner",
-      "blocks": {
-        "template--18309637636369__6a3bb789-ce10-45f5-ae67-e2063ef8c76b-168016437761699a6e-0": {
-          "type": "heading",
-          "settings": {
-            "heading": "Generated test data",
-            "heading_size": "h1"
-          }
-        },
-        "template--18309637636369__6a3bb789-ce10-45f5-ae67-e2063ef8c76b-168016437761699a6e-1": {
-          "type": "text",
-          "settings": {
-            "text": "A theme and populated test store by Shopify to help you test commerce primitives.",
-            "text_style": "body"
-          }
-        },
-        "template--18309637636369__6a3bb789-ce10-45f5-ae67-e2063ef8c76b-168016437761699a6e-2": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop products",
-            "button_link_1": "shopify:\/\/collections\/all",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "template--18309637636369__6a3bb789-ce10-45f5-ae67-e2063ef8c76b-168016437761699a6e-0",
-        "template--18309637636369__6a3bb789-ce10-45f5-ae67-e2063ef8c76b-168016437761699a6e-1",
-        "template--18309637636369__6a3bb789-ce10-45f5-ae67-e2063ef8c76b-168016437761699a6e-2"
-      ],
-      "custom_css": [],
-      "settings": {
-        "image": "shopify:\/\/shop_images\/theme_cover_image.jpg",
-        "image_overlay_opacity": 0,
-        "image_height": "medium",
-        "desktop_content_position": "middle-left",
-        "show_text_box": true,
-        "desktop_content_alignment": "left",
-        "color_scheme": "background-1",
-        "image_behavior": "none",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": true,
-        "show_text_below": true
       }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "<strong>Featured products<\/strong>",
+        "title": "<strong>Featured products</strong>",
         "heading_size": "h1",
         "description": "",
         "show_description": false,
@@ -105,7 +65,7 @@
         "template--18309637636369__f1552b18-6017-4231-810d-74e61da22c37-1680164422d7fb2efc-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Try our wax subscription so you can fly high, but never dry.<\/p>",
+            "text": "<p>Try our wax subscription so you can fly high, but never dry.</p>",
             "text_style": "body"
           }
         },
@@ -113,7 +73,7 @@
           "type": "button",
           "settings": {
             "button_label": "Get waxy now",
-            "button_link": "shopify:\/\/products\/selling-plans-ski-wax"
+            "button_link": "shopify://products/selling-plans-ski-wax"
           }
         }
       },
@@ -123,7 +83,7 @@
         "template--18309637636369__f1552b18-6017-4231-810d-74e61da22c37-1680164422d7fb2efc-2"
       ],
       "settings": {
-        "image": "shopify:\/\/shop_images\/theme_cover_image.jpg",
+        "image": "shopify://shop_images/theme_cover_image.jpg",
         "height": "adapt",
         "desktop_image_width": "medium",
         "layout": "image_first",
@@ -158,7 +118,7 @@
         "template--18309637636369__38cdf60f-e431-43b5-aac3-7e6215447d67-1680164898782d94ce-1"
       ],
       "settings": {
-        "title": "<strong>Collections<\/strong>",
+        "title": "<strong>Collections</strong>",
         "heading_size": "h1",
         "image_ratio": "portrait",
         "columns_desktop": 2,
@@ -173,7 +133,6 @@
   },
   "order": [
     "hero-split",
-    "6a3bb789-ce10-45f5-ae67-e2063ef8c76b",
     "featured_collection",
     "f1552b18-6017-4231-810d-74e61da22c37",
     "38cdf60f-e431-43b5-aac3-7e6215447d67"
