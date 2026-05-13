@@ -1,1 +1,71 @@
-{"name":"t:sections.footer.name","type":"footer","sections":{"footer":{"type":"footer","blocks":{"55172ef6-3a6a-4cfa-b790-88739b47891f":{"type":"link_list","settings":{"heading":"Quick links","menu":"main-menu"}},"6e0c08d4-cd4c-439c-b5e2-a483bba29ec2":{"type":"brand_information","settings":{"show_social":true}},"f95fe295-fbc2-4d2b-a952-72670c2ab328":{"type":"text","settings":{"heading":"Resources","subtext":"<ul><li><a href=\"https:\/\/shopify.dev\/docs\/apps\/tools\/development-stores\/generated-data\" target=\"_blank\" title=\"Generated test data developer docs\">Generated test data docs<\/a><\/li><li><a href=\"https:\/\/shopify.dev\/docs\/apps\/tools\/graphiql-admin-api\" target=\"_blank\" title=\"GraphiQL API explorer\">GraphiQL API explorer<\/a><\/li><\/ul>"}}},"block_order":["55172ef6-3a6a-4cfa-b790-88739b47891f","6e0c08d4-cd4c-439c-b5e2-a483bba29ec2","f95fe295-fbc2-4d2b-a952-72670c2ab328"],"settings":{"color_scheme":"inverse","newsletter_enable":false,"newsletter_heading":"Subscribe to our emails","enable_follow_on_shop":true,"show_social":true,"enable_country_selector":false,"enable_language_selector":true,"payment_enable":true,"show_policy":true,"margin_top":48,"padding_top":36,"padding_bottom":36}}},"order":["footer"]}
+{
+  "name": "Footer",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "brand_info": {
+          "type": "brand_information",
+          "settings": {
+            "logo_text_1": "BB",
+            "logo_text_2": "BIZ",
+            "description": "Premium streetwear built for the modern generation. Quality in every thread, boldness in every stitch.",
+            "show_social": true
+          }
+        },
+        "shop_menu": {
+          "type": "link_list",
+          "settings": {
+            "heading": "SHOP",
+            "mock_links": "New Arrivals|T-Shirts|Jeans|Hoodies|Bottoms|Sale",
+            "highlight_text": "Sale"
+          }
+        },
+        "info_menu": {
+          "type": "link_list",
+          "settings": {
+            "heading": "INFO",
+            "mock_links": "About Us|Size Guide|Sustainability|Careers",
+            "highlight_text": ""
+          }
+        },
+        "support_menu": {
+          "type": "link_list",
+          "settings": {
+            "heading": "SUPPORT",
+            "mock_links": "Track Order|Returns|Shipping Info|Contact Us",
+            "highlight_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "brand_info",
+        "shop_menu",
+        "info_menu",
+        "support_menu"
+      ],
+      "settings": {
+        "bg_color": "#070d18",
+        "text_color": "#ffffff",
+        "text_color_muted": "#8892a0",
+        "heading_color": "#ffffff",
+        "highlight_color": "#f5b82e",
+        "badge_bg_color": "#131d30",
+        "badge_text_color": "#8892a0",
+        "divider_color": "#14223d",
+        "copyright_text": "BlueBiz. All rights reserved.",
+        "show_payment": true,
+        "payment_badges": "UPI|Visa|Mastercard|RuPay|COD",
+        "margin_top": 0,
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 50,
+        "padding_bottom_mobile": 0
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}
