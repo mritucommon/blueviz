@@ -1,0 +1,388 @@
+{%- style -%}
+  .sale-banner-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    background-color: {{ section.settings.section_bg }};
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  @media screen and (min-width: 750px) {
+    .sale-banner-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+  }
+
+  .sale-banner__content-{{ section.id }} {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+
+  .sale-banner__subheading-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: {{ section.settings.subtitle_color }};
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+
+  .sale-banner__title-wrapper-{{ section.id }} {
+    margin: 0 0 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.95;
+  }
+
+  .sale-banner__title-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(40px, 8.5vw, 88px);
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .sale-banner__title-line1-{{ section.id }} {
+    color: {{ section.settings.heading_1_color }};
+    display: block;
+  }
+
+  .sale-banner__title-line2-{{ section.id }} {
+    color: {{ section.settings.heading_2_color }};
+    display: block;
+  }
+
+  .sale-banner__description-{{ section.id }} {
+    font-family: var(--font-body-family, sans-serif);
+    font-size: clamp(14px, 1.8vw, 16px);
+    line-height: 1.6;
+    color: {{ section.settings.description_color }};
+    max-width: 540px;
+    margin: 0 0 36px 0;
+  }
+
+  .sale-banner__buttons-{{ section.id }} {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .sale-banner__btn-{{ section.id }} {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 36px;
+    border-radius: 4px;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+
+  .sale-banner__btn--1-{{ section.id }} {
+    background-color: {{ section.settings.button_1_bg }};
+    color: {{ section.settings.button_1_text }};
+    border: 1px solid {{ section.settings.button_1_border }};
+  }
+
+  .sale-banner__btn--2-{{ section.id }} {
+    background-color: {{ section.settings.button_2_bg }};
+    color: {{ section.settings.button_2_text }};
+    border: 1px solid {{ section.settings.button_2_border }};
+  }
+
+  .sale-banner__btn-{{ section.id }}:hover {
+    background-color: {{ section.settings.button_hover_bg }};
+    border-color: {{ section.settings.button_hover_bg }};
+    color: {{ section.settings.button_hover_text }};
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(65, 148, 255, 0.2);
+  }
+
+  @media screen and (max-width: 480px) {
+    .sale-banner__buttons-{{ section.id }} {
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .sale-banner__btn-{{ section.id }} {
+      width: 100%;
+      min-width: unset;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sale-banner-{{ section.id }}" id="SaleBanner-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="sale-banner__content-{{ section.id }}">
+    {%- if section.settings.subtitle != blank -%}
+      <div class="sale-banner__subheading-{{ section.id }}">{{ section.settings.subtitle | escape }}</div>
+    {%- endif -%}
+
+    <div class="sale-banner__title-wrapper-{{ section.id }}">
+      {%- if section.settings.heading_1 != blank -%}
+        <h2 class="sale-banner__title-{{ section.id }} sale-banner__title-line1-{{ section.id }}">{{ section.settings.heading_1 | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.heading_2 != blank -%}
+        <h2 class="sale-banner__title-{{ section.id }} sale-banner__title-line2-{{ section.id }}">{{ section.settings.heading_2 | escape }}</h2>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.description != blank -%}
+      <div class="sale-banner__description-{{ section.id }}">{{ section.settings.description | escape }}</div>
+    {%- endif -%}
+
+    <div class="sale-banner__buttons-{{ section.id }}">
+      {%- if section.settings.button_1_label != blank -%}
+        <a {% if section.settings.button_1_link == blank %}role="link" aria-disabled="true"{% else %}href="{{ section.settings.button_1_link }}"{% endif %} class="sale-banner__btn-{{ section.id }} sale-banner__btn--1-{{ section.id }}">
+          {{ section.settings.button_1_label | escape }}
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.button_2_label != blank -%}
+        <a {% if section.settings.button_2_link == blank %}role="link" aria-disabled="true"{% else %}href="{{ section.settings.button_2_link }}"{% endif %} class="sale-banner__btn-{{ section.id }} sale-banner__btn--2-{{ section.id }}">
+          {{ section.settings.button_2_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Sale Promo Banner",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Background Color",
+      "default": "#070d18"
+    },
+    {
+      "type": "header",
+      "content": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading Text",
+      "default": "LIMITED TIME"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subheading Color",
+      "default": "#4194ff"
+    },
+    {
+      "type": "header",
+      "content": "Main Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_1",
+      "label": "Heading Line 1",
+      "default": "SALE IS"
+    },
+    {
+      "type": "color",
+      "id": "heading_1_color",
+      "label": "Heading Line 1 Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "heading_2",
+      "label": "Heading Line 2",
+      "default": "LIVE NOW"
+    },
+    {
+      "type": "color",
+      "id": "heading_2_color",
+      "label": "Heading Line 2 Color",
+      "default": "#4194ff"
+    },
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description Text",
+      "default": "Up to 50% off on selected styles. Quality streetwear, now within reach."
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#8892a0"
+    },
+    {
+      "type": "header",
+      "content": "Button 1"
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Button 1 Label",
+      "default": "SHOP THE SALE"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "color",
+      "id": "button_1_bg",
+      "label": "Button 1 Background",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "button_1_text",
+      "label": "Button 1 Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_1_border",
+      "label": "Button 1 Border Color",
+      "default": "#1f2e4d"
+    },
+    {
+      "type": "header",
+      "content": "Button 2"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Button 2 Label",
+      "default": "ALL PRODUCTS"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 Link"
+    },
+    {
+      "type": "color",
+      "id": "button_2_bg",
+      "label": "Button 2 Background",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "button_2_text",
+      "label": "Button 2 Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_2_border",
+      "label": "Button 2 Border Color",
+      "default": "#1f2e4d"
+    },
+    {
+      "type": "header",
+      "content": "Buttons Hover State"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Hover Background Color",
+      "default": "#4194ff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text",
+      "label": "Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 20,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 100,
+      "label": "Padding Top (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 20,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 100,
+      "label": "Padding Bottom (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60,
+      "label": "Padding Top (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60,
+      "label": "Padding Bottom (Mobile)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sale Promo Banner"
+    }
+  ]
+}
+{% endschema %}
