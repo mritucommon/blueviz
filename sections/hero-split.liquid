@@ -88,7 +88,15 @@
     grid-template-columns: 1fr;
     min-height: calc(100vh - 120px);
   }
-  
+  @media screen and (min-width: 480px) {
+  .hero-split__text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #8892A0;
+    margin-bottom: 35px;
+}
+}
   @media screen and (min-width: 750px) {
     .hero-split__container {
       grid-template-columns: 1fr 1fr;

@@ -1,0 +1,595 @@
+{%- style -%}
+  .scrolling-ticker-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    --ticker-bg: {% if section.settings.use_custom_colors %}{{ section.settings.custom_bg_color }}{% else %}var(--gradient-background){% endif %};
+    --ticker-text-color: {% if section.settings.use_custom_colors %}{{ section.settings.custom_text_color }}{% else %}var(--color-foreground){% endif %};
+    --ticker-border-color: {% if section.settings.use_custom_colors %}{{ section.settings.custom_border_color }}{% else %}rgba(var(--color-foreground), 0.08){% endif %};
+    
+    background: var(--ticker-bg);
+    border-top: {{ section.settings.border_top }}px solid var(--ticker-border-color);
+    border-bottom: {{ section.settings.border_bottom }}px solid var(--ticker-border-color);
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  @media screen and (min-width: 750px) {
+    .scrolling-ticker-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+  }
+
+  .scrolling-ticker-wrapper-{{ section.id }} {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    user-select: none;
+  }
+
+  .scrolling-ticker-inner-{{ section.id }} {
+    display: flex;
+    width: max-content;
+    white-space: nowrap;
+    align-items: center;
+  }
+
+  .scrolling-ticker-group-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-width: 100vw;
+    flex-shrink: 0;
+    gap: {{ section.settings.gap_mobile }}px;
+    padding: 0 calc({{ section.settings.gap_mobile }}px / 2);
+  }
+
+  @media screen and (min-width: 750px) {
+    .scrolling-ticker-group-{{ section.id }} {
+      gap: {{ section.settings.gap_desktop }}px;
+      padding: 0 calc({{ section.settings.gap_desktop }}px / 2);
+    }
+  }
+
+  .scrolling-ticker-item-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--ticker-text-color);
+    font-size: {{ section.settings.font_size_mobile }}px;
+    font-weight: {{ section.settings.font_weight }};
+    letter-spacing: {{ section.settings.letter_spacing_mobile }}px;
+    text-transform: {{ section.settings.text_transform }};
+    transition: all 0.3s ease;
+    cursor: default;
+    {% if section.settings.font_family == 'heading' %}
+      font-family: var(--font-heading-family);
+    {% else %}
+      font-family: var(--font-body-family);
+    {% endif %}
+  }
+
+  @media screen and (min-width: 750px) {
+    .scrolling-ticker-item-{{ section.id }} {
+      font-size: {{ section.settings.font_size_desktop }}px;
+      letter-spacing: {{ section.settings.letter_spacing_desktop }}px;
+    }
+  }
+
+  a.scrolling-ticker-item-{{ section.id }} {
+    cursor: pointer;
+  }
+
+  a.scrolling-ticker-item-{{ section.id }}:hover {
+    transform: scale(1.05);
+    opacity: 0.85;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  }
+
+  .scrolling-ticker-separator-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: {% if section.settings.use_custom_colors and section.settings.custom_separator_color != blank %}{{ section.settings.custom_separator_color }}{% else %}var(--ticker-text-color){% endif %};
+    opacity: {{ section.settings.separator_opacity | divided_by: 100.0 }};
+    margin-left: {{ section.settings.gap_mobile }}px;
+    font-size: {{ section.settings.font_size_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .scrolling-ticker-separator-{{ section.id }} {
+      margin-left: {{ section.settings.gap_desktop }}px;
+      font-size: {{ section.settings.font_size_desktop }}px;
+    }
+  }
+
+  /* Animations */
+  @keyframes scroll-left-{{ section.id }} {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes scroll-right-{{ section.id }} {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .scroll-left-anim-{{ section.id }} {
+    animation: scroll-left-{{ section.id }} {{ section.settings.speed }}s linear infinite;
+  }
+
+  .scroll-right-anim-{{ section.id }} {
+    animation: scroll-right-{{ section.id }} {{ section.settings.speed }}s linear infinite;
+  }
+
+  {% if section.settings.pause_on_hover %}
+    .scrolling-ticker-wrapper-{{ section.id }}:hover .scrolling-ticker-inner-{{ section.id }} {
+      animation-play-state: paused;
+    }
+  {% endif %}
+{%- endstyle -%}
+
+<div class="scrolling-ticker-{{ section.id }} {% unless section.settings.full_width %}page-width{% endunless %}" id="ScrollingTicker-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="scrolling-ticker-wrapper-{{ section.id }}">
+    <div class="scrolling-ticker-inner-{{ section.id }} {% if section.settings.direction == 'left' %}scroll-left-anim-{{ section.id }}{% else %}scroll-right-anim-{{ section.id }}{% endif %}">
+      {%- for i in (1..2) -%}
+        <div class="scrolling-ticker-group-{{ section.id }}" {% if i > 1 %}aria-hidden="true"{% endif %}>
+          {%- for block in section.blocks -%}
+            {%- if block.settings.text != blank -%}
+              <div class="scrolling-ticker-item-wrapper" style="display: inline-flex; align-items: center;" {{ block.shopify_attributes }}>
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}" class="scrolling-ticker-item-{{ section.id }}" style="{% if block.settings.custom_color_enable %}color: {{ block.settings.custom_color }};{% endif %}{% if block.settings.bold_item %}font-weight: bold;{% endif %}">
+                    {{ block.settings.text | escape }}
+                  </a>
+                {%- else -%}
+                  <span class="scrolling-ticker-item-{{ section.id }}" style="{% if block.settings.custom_color_enable %}color: {{ block.settings.custom_color }};{% endif %}{% if block.settings.bold_item %}font-weight: bold;{% endif %}">
+                    {{ block.settings.text | escape }}
+                  </span>
+                {%- endif -%}
+
+                {%- if section.settings.separator_type != 'none' -%}
+                  <span class="scrolling-ticker-separator-{{ section.id }}" aria-hidden="true">
+                    {%- case section.settings.separator_type -%}
+                      {%- when 'dash' -%}
+                        &mdash;
+                      {%- when 'dot' -%}
+                        &bull;
+                      {%- when 'star' -%}
+                        &#9733;
+                      {%- when 'diamond' -%}
+                        &#10022;
+                      {%- when 'slash' -%}
+                        /
+                    {%- endcase -%}
+                  </span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Scrolling Ticker",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": true,
+      "label": "Full Width Section"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "options": [
+        {
+          "value": "left",
+          "label": "Scroll Left"
+        },
+        {
+          "value": "right",
+          "label": "Scroll Right"
+        }
+      ],
+      "default": "left",
+      "label": "Scroll Direction"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "unit": "s",
+      "label": "Scroll Speed (Duration)",
+      "default": 20,
+      "info": "Lower duration means faster scroll speed."
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "default": true,
+      "label": "Pause Scroll on Hover"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "options": [
+        {
+          "value": "heading",
+          "label": "Heading Font"
+        },
+        {
+          "value": "body",
+          "label": "Body Font"
+        }
+      ],
+      "default": "heading",
+      "label": "Font Family"
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size (Desktop)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size (Mobile)",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "options": [
+        {
+          "value": "300",
+          "label": "Light"
+        },
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-Bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        },
+        {
+          "value": "800",
+          "label": "Extra Bold"
+        }
+      ],
+      "default": "600",
+      "label": "Font Weight"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing_desktop",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Letter Spacing (Desktop)",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing_mobile",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Letter Spacing (Mobile)",
+      "default": 1.5
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "options": [
+        {
+          "value": "uppercase",
+          "label": "UPPERCASE"
+        },
+        {
+          "value": "lowercase",
+          "label": "lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "uppercase",
+      "label": "Text Transform"
+    },
+    {
+      "type": "header",
+      "content": "Spacing & Borders"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 10,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Spacing Between Items (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Spacing Between Items (Mobile)",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top (Desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom (Desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "border_top",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Top Width",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "border_bottom",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Bottom Width",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Separators"
+    },
+    {
+      "type": "select",
+      "id": "separator_type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "dash",
+          "label": "Dash (—)"
+        },
+        {
+          "value": "dot",
+          "label": "Dot (•)"
+        },
+        {
+          "value": "star",
+          "label": "Star (★)"
+        },
+        {
+          "value": "diamond",
+          "label": "Diamond (✦)"
+        },
+        {
+          "value": "slash",
+          "label": "Slash (/)"
+        }
+      ],
+      "default": "dash",
+      "label": "Separator Type"
+    },
+    {
+      "type": "range",
+      "id": "separator_opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Separator Opacity",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Colors Customization"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_custom_colors",
+      "default": true,
+      "label": "Use Custom Colors (Overrides Scheme)"
+    },
+    {
+      "type": "color",
+      "id": "custom_bg_color",
+      "label": "Background Color",
+      "default": "#0b1324"
+    },
+    {
+      "type": "color",
+      "id": "custom_text_color",
+      "label": "Text Color",
+      "default": "#5b6c8f"
+    },
+    {
+      "type": "color",
+      "id": "custom_separator_color",
+      "label": "Separator Color",
+      "default": "#5b6c8f"
+    },
+    {
+      "type": "color",
+      "id": "custom_border_color",
+      "label": "Border Color",
+      "default": "#1a263e"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_item",
+      "name": "Ticker Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "NEW ARRIVALS"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "bold_item",
+          "default": false,
+          "label": "Bold this Item"
+        },
+        {
+          "type": "checkbox",
+          "id": "custom_color_enable",
+          "default": false,
+          "label": "Use Custom Color for this item"
+        },
+        {
+          "type": "color",
+          "id": "custom_color",
+          "label": "Item Custom Color",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrolling Ticker",
+      "blocks": [
+        {
+          "type": "text_item",
+          "settings": {
+            "text": "NEW ARRIVALS"
+          }
+        },
+        {
+          "type": "text_item",
+          "settings": {
+            "text": "PREMIUM QUALITY"
+          }
+        },
+        {
+          "type": "text_item",
+          "settings": {
+            "text": "STREET CULTURE"
+          }
+        },
+        {
+          "type": "text_item",
+          "settings": {
+            "text": "BOLD STYLES"
+          }
+        },
+        {
+          "type": "text_item",
+          "settings": {
+            "text": "SUMMER DROP"
+          }
+        },
+        {
+          "type": "text_item",
+          "settings": {
+            "text": "SHOP NOW"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

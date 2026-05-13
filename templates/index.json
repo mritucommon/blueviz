@@ -25,6 +25,61 @@
         "visual_label": "BLUEBIZ · EST. 2024"
       }
     },
+    "scrolling-ticker": {
+      "type": "scrolling-ticker",
+      "blocks": {
+        "item_1": {
+          "type": "text_item",
+          "settings": {
+            "text": "NEW ARRIVALS"
+          }
+        },
+        "item_2": {
+          "type": "text_item",
+          "settings": {
+            "text": "PREMIUM QUALITY"
+          }
+        },
+        "item_3": {
+          "type": "text_item",
+          "settings": {
+            "text": "STREET CULTURE"
+          }
+        },
+        "item_4": {
+          "type": "text_item",
+          "settings": {
+            "text": "BOLD STYLES"
+          }
+        },
+        "item_5": {
+          "type": "text_item",
+          "settings": {
+            "text": "SUMMER DROP"
+          }
+        },
+        "item_6": {
+          "type": "text_item",
+          "settings": {
+            "text": "SHOP NOW"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_5",
+        "item_6"
+      ],
+      "settings": {
+        "use_custom_colors": true,
+        "custom_bg_color": "#0b1324",
+        "custom_text_color": "#5b6c8f",
+        "custom_separator_color": "#5b6c8f"
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -133,6 +188,7 @@
   },
   "order": [
     "hero-split",
+    "scrolling-ticker",
     "featured_collection",
     "f1552b18-6017-4231-810d-74e61da22c37",
     "38cdf60f-e431-43b5-aac3-7e6215447d67"
