@@ -94,6 +94,23 @@
   @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap');
   
   /* Header Layout */
+  @media screen and (max-width: 989px) {
+    .header {
+      grid-template-columns: auto auto 1fr !important;
+      grid-template-areas: "navigation heading icons" !important;
+      column-gap: 10px !important;
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+    }
+    .header__heading, .header__heading-link {
+      justify-self: flex-start !important;
+      margin: 0 !important;
+    }
+    .header__icons {
+      justify-self: end !important;
+    }
+  }
+
   @media screen and (min-width: 990px) {
     .header--middle-left {
       display: flex !important;
@@ -933,13 +950,11 @@
       </a>
 
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
-        {%- liquid
-          if cart == empty
-            render 'icon-cart-empty'
-          else
-            render 'icon-cart'
-          endif
-        -%}
+        <svg class="icon icon-cart" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
         {%- if cart != empty -%}
           <div class="cart-count-bubble">
