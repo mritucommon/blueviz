@@ -125,6 +125,8 @@
     align-items: center !important;
     gap: 10px !important;
     text-decoration: none !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
   }
   .bluebiz-custom-logo .logo-icon {
     background-color: #0B1220 !important;
@@ -140,6 +142,7 @@
     justify-content: center !important;
     border-radius: 6px !important;
     line-height: 1 !important;
+    flex-shrink: 0 !important;
   }
   .bluebiz-custom-logo .logo-text {
     font-family: 'Outfit', sans-serif !important;
@@ -148,6 +151,21 @@
     letter-spacing: 0.02em !important;
     line-height: 1 !important;
     text-transform: uppercase !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  @media screen and (max-width: 749px) {
+    .bluebiz-custom-logo {
+      gap: 6px !important;
+    }
+    .bluebiz-custom-logo .logo-icon {
+      width: 28px !important;
+      height: 28px !important;
+      font-size: 12px !important;
+    }
+    .bluebiz-custom-logo .logo-text {
+      font-size: 18px !important;
+    }
   }
   .bluebiz-custom-logo .logo-text .blue {
     color: #0B1220 !important;
@@ -197,6 +215,11 @@
     align-items: center !important;
     gap: 12px !important;
   }
+  @media screen and (max-width: 749px) {
+    .header__icons {
+      gap: 2px !important;
+    }
+  }
   .header__icon {
     color: #0B1220 !important;
     transition: color 0.2s ease !important;
@@ -205,6 +228,13 @@
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+  @media screen and (max-width: 749px) {
+    .header__icon {
+      width: 36px !important;
+      height: 36px !important;
+    }
   }
   .header__icon:hover {
     color: #1E88E5 !important;
@@ -212,6 +242,13 @@
   .header__icon svg {
     width: 22px !important;
     height: 22px !important;
+    flex-shrink: 0 !important;
+  }
+  @media screen and (max-width: 749px) {
+    .header__icon svg {
+      width: 20px !important;
+      height: 20px !important;
+    }
   }
 
   /* Cart Badge */
@@ -232,6 +269,16 @@
     right: 3px !important;
     border: 2px solid #FFFFFF !important;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    flex-shrink: 0 !important;
+  }
+  @media screen and (max-width: 749px) {
+    .cart-count-bubble {
+      width: 16px !important;
+      height: 16px !important;
+      font-size: 9px !important;
+      top: 2px !important;
+      right: 2px !important;
+    }
   }
 </style>
 
