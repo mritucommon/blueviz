@@ -31,37 +31,61 @@
         "item_1": {
           "type": "text_item",
           "settings": {
-            "text": "NEW ARRIVALS"
+            "text": "NEW ARRIVALS",
+            "link": "",
+            "bold_item": false,
+            "custom_color_enable": false,
+            "custom_color": "#ffffff"
           }
         },
         "item_2": {
           "type": "text_item",
           "settings": {
-            "text": "PREMIUM QUALITY"
+            "text": "PREMIUM QUALITY",
+            "link": "",
+            "bold_item": false,
+            "custom_color_enable": false,
+            "custom_color": "#ffffff"
           }
         },
         "item_3": {
           "type": "text_item",
           "settings": {
-            "text": "STREET CULTURE"
+            "text": "STREET CULTURE",
+            "link": "",
+            "bold_item": false,
+            "custom_color_enable": false,
+            "custom_color": "#ffffff"
           }
         },
         "item_4": {
           "type": "text_item",
           "settings": {
-            "text": "BOLD STYLES"
+            "text": "BOLD STYLES",
+            "link": "",
+            "bold_item": false,
+            "custom_color_enable": false,
+            "custom_color": "#ffffff"
           }
         },
         "item_5": {
           "type": "text_item",
           "settings": {
-            "text": "SUMMER DROP"
+            "text": "SUMMER DROP",
+            "link": "",
+            "bold_item": false,
+            "custom_color_enable": false,
+            "custom_color": "#ffffff"
           }
         },
         "item_6": {
           "type": "text_item",
           "settings": {
-            "text": "SHOP NOW"
+            "text": "SHOP NOW",
+            "link": "",
+            "bold_item": false,
+            "custom_color_enable": false,
+            "custom_color": "#ffffff"
           }
         }
       },
@@ -74,10 +98,32 @@
         "item_6"
       ],
       "settings": {
+        "full_width": true,
+        "direction": "left",
+        "speed": 20,
+        "pause_on_hover": true,
+        "font_family": "heading",
+        "font_size_desktop": 20,
+        "font_size_mobile": 14,
+        "font_weight": "600",
+        "letter_spacing_desktop": 3,
+        "letter_spacing_mobile": 1.5,
+        "text_transform": "uppercase",
+        "gap_desktop": 60,
+        "gap_mobile": 30,
+        "padding_top_desktop": 16,
+        "padding_bottom_desktop": 16,
+        "padding_top_mobile": 12,
+        "padding_bottom_mobile": 12,
+        "border_top": 0,
+        "border_bottom": 0,
+        "separator_type": "dash",
+        "separator_opacity": 100,
         "use_custom_colors": true,
         "custom_bg_color": "#0b1324",
         "custom_text_color": "#5b6c8f",
-        "custom_separator_color": "#5b6c8f"
+        "custom_separator_color": "#5b6c8f",
+        "custom_border_color": "#1a263e"
       }
     },
     "collections-grid": {
@@ -86,46 +132,71 @@
         "card_1": {
           "type": "collection_card",
           "settings": {
+            "collection": "",
             "title": "T-SHIRTS",
             "subtitle": "COLLECTION",
-            "bg_color_gradient": "linear-gradient(180deg, #132742 0%, #0a1729 100%)",
+            "link_text": "SHOP",
+            "custom_link": "",
+            "bg_color_gradient": "linear-gradient(180deg, rgba(19, 39, 66, 1), rgba(10, 23, 41, 1) 100%)",
             "bg_color_fallback": "#132742",
+            "text_color": "#ffffff",
             "subheading_color": "#5fa6eb",
             "pattern_type": "diagonal",
-            "pattern_opacity": 30
+            "pattern_opacity": 30,
+            "watermark_text": "",
+            "watermark_color": "#ffffff",
+            "watermark_opacity": 4
           }
         },
         "card_2": {
           "type": "collection_card",
           "settings": {
+            "collection": "",
             "title": "JEANS",
             "subtitle": "COLLECTION",
+            "link_text": "SHOP",
+            "custom_link": "",
             "bg_color_gradient": "linear-gradient(180deg, #0f1c30 0%, #070e1a 100%)",
             "bg_color_fallback": "#0f1c30",
+            "text_color": "#ffffff",
             "subheading_color": "#4b7fbf",
             "pattern_type": "diagonal",
-            "pattern_opacity": 20
+            "pattern_opacity": 20,
+            "watermark_text": "",
+            "watermark_color": "#ffffff",
+            "watermark_opacity": 4
           }
         },
         "card_3": {
           "type": "collection_card",
           "settings": {
+            "collection": "",
             "title": "HOODIES",
             "subtitle": "COLLECTION",
-            "bg_color_gradient": "linear-gradient(180deg, #102e5c 0%, #061633 100%)",
+            "link_text": "SHOP",
+            "custom_link": "",
+            "bg_color_gradient": "linear-gradient(180deg, rgba(16, 46, 92, 1), rgba(6, 22, 51, 1) 100%)",
             "bg_color_fallback": "#102e5c",
+            "text_color": "#ffffff",
             "subheading_color": "#5e9bf5",
             "pattern_type": "horizontal",
-            "pattern_opacity": 25
+            "pattern_opacity": 25,
+            "watermark_text": "",
+            "watermark_color": "#ffffff",
+            "watermark_opacity": 4
           }
         },
         "card_4": {
           "type": "collection_card",
           "settings": {
+            "collection": "",
             "title": "SALE",
             "subtitle": "UP TO 50% OFF",
-            "bg_color_gradient": "linear-gradient(180deg, #2b260f 0%, #121006 100%)",
+            "link_text": "SHOP",
+            "custom_link": "",
+            "bg_color_gradient": "linear-gradient(180deg, rgba(43, 38, 15, 1), rgba(18, 16, 6, 1) 100%)",
             "bg_color_fallback": "#2b260f",
+            "text_color": "#ffffff",
             "subheading_color": "#e6c645",
             "pattern_type": "dot-grid",
             "pattern_opacity": 35,
@@ -161,33 +232,6 @@
         "section_bg": "#ffffff",
         "section_text_color": "#0b1220",
         "section_subheading_color": "#8892a0"
-      }
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "<strong>Featured products</strong>",
-        "heading_size": "h1",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "automated-collection",
-        "products_to_show": 10,
-        "columns_desktop": 3,
-        "full_width": false,
-        "show_view_all": false,
-        "view_all_style": "solid",
-        "enable_desktop_slider": true,
-        "color_scheme": "background-1",
-        "image_ratio": "portrait",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "enable_quick_add": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
       }
     },
     "f1552b18-6017-4231-810d-74e61da22c37": {
@@ -273,7 +317,6 @@
     "hero-split",
     "scrolling-ticker",
     "collections-grid",
-    "featured_collection",
     "f1552b18-6017-4231-810d-74e61da22c37",
     "38cdf60f-e431-43b5-aac3-7e6215447d67"
   ]
