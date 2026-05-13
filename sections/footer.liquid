@@ -122,6 +122,16 @@
     color: {{ section.settings.heading_color }};
     margin-bottom: 24px;
     line-height: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-accordion-icon-{{ section.id }} {
+    display: none;
+    font-size: 16px;
+    font-weight: 300;
+    transition: transform 0.3s ease;
   }
 
   .footer-block__menu-list-{{ section.id }} {
@@ -131,6 +141,33 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+  }
+
+  @media screen and (max-width: 599px) {
+    .footer-{{ section.id }} .footer__content-top {
+      gap: 0;
+    }
+    .footer-block-{{ section.id }} {
+      border-bottom: 1px solid {{ section.settings.divider_color }};
+      padding: 16px 0;
+    }
+    .footer-block__heading-{{ section.id }} {
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+    .footer-accordion-icon-{{ section.id }} {
+      display: block;
+    }
+    .footer-block__menu-content-{{ section.id }} {
+      display: none;
+      padding-top: 16px;
+    }
+    .footer-block-{{ section.id }}.is-open .footer-block__menu-content-{{ section.id }} {
+      display: block;
+    }
+    .footer-block-{{ section.id }}.is-open .footer-accordion-icon-{{ section.id }} {
+      transform: rotate(45deg);
+    }
   }
 
   .footer-block__menu-item-{{ section.id }} {
@@ -184,8 +221,16 @@
   .footer__payment-list-{{ section.id }} {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 8px;
+    overflow-x: auto;
+    max-width: 100%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .footer__payment-list-{{ section.id }}::-webkit-scrollbar {
+    display: none;
   }
 
   .footer__payment-badge-{{ section.id }} {
@@ -202,6 +247,8 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     user-select: none;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 {%- endstyle -%}
 
@@ -244,34 +291,39 @@
 
           {%- when 'link_list' -%}
             {%- if block.settings.heading != blank -%}
-              <div class="footer-block__heading-{{ section.id }}">{{ block.settings.heading | escape }}</div>
+              <div class="footer-block__heading-{{ section.id }} footer-accordion-trigger-{{ section.id }}">
+                {{ block.settings.heading | escape }}
+                <span class="footer-accordion-icon-{{ section.id }}">+</span>
+              </div>
             {%- endif -%}
 
-            <ul class="footer-block__menu-list-{{ section.id }}">
-              {%- if block.settings.menu != blank -%}
-                {%- for link in block.settings.menu.links -%}
-                  {%- assign link_title_down = link.title | downcase -%}
+            <div class="footer-block__menu-content-{{ section.id }}">
+              <ul class="footer-block__menu-list-{{ section.id }}">
+                {%- if block.settings.menu != blank -%}
+                  {%- for link in block.settings.menu.links -%}
+                    {%- assign link_title_down = link.title | downcase -%}
+                    {%- assign highlight_down = block.settings.highlight_text | downcase -%}
+                    <li>
+                      <a href="{{ link.url }}" class="footer-block__menu-item-{{ section.id }} {% if link_title_down == highlight_down %}footer-block__menu-item-{{ section.id }}--highlight{% endif %}">
+                        {{ link.title }}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                {%- else -%}
+                  <!-- Fallback Mock Menus to match screenshot perfectly if no menu selected -->
+                  {%- assign mock_links = block.settings.mock_links | split: '|' -%}
                   {%- assign highlight_down = block.settings.highlight_text | downcase -%}
-                  <li>
-                    <a href="{{ link.url }}" class="footer-block__menu-item-{{ section.id }} {% if link_title_down == highlight_down %}footer-block__menu-item-{{ section.id }}--highlight{% endif %}">
-                      {{ link.title }}
-                    </a>
-                  </li>
-                {%- endfor -%}
-              {%- else -%}
-                <!-- Fallback Mock Menus to match screenshot perfectly if no menu selected -->
-                {%- assign mock_links = block.settings.mock_links | split: '|' -%}
-                {%- assign highlight_down = block.settings.highlight_text | downcase -%}
-                {%- for link_text in mock_links -%}
-                  {%- assign link_text_down = link_text | downcase -%}
-                  <li>
-                    <a href="#" class="footer-block__menu-item-{{ section.id }} {% if link_text_down == highlight_down %}footer-block__menu-item-{{ section.id }}--highlight{% endif %}">
-                      {{ link_text }}
-                    </a>
-                  </li>
-                {%- endfor -%}
-              {%- endif -%}
-            </ul>
+                  {%- for link_text in mock_links -%}
+                    {%- assign link_text_down = link_text | downcase -%}
+                    <li>
+                      <a href="#" class="footer-block__menu-item-{{ section.id }} {% if link_text_down == highlight_down %}footer-block__menu-item-{{ section.id }}--highlight{% endif %}">
+                        {{ link_text }}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                {%- endif -%}
+              </ul>
+            </div>
 
         {%- endcase -%}
         
@@ -311,6 +363,33 @@
     {%- endif -%}
   </div>
 </footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const triggers = document.querySelectorAll('.footer-accordion-trigger-{{ section.id }}');
+    
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', function() {
+        if (window.innerWidth >= 600) return; // Only run on mobile
+        
+        const parentBlock = this.closest('.footer-block-{{ section.id }}');
+        const isOpen = parentBlock.classList.contains('is-open');
+        
+        // Close all other blocks (accordion group behavior)
+        document.querySelectorAll('.footer-block-{{ section.id }}').forEach(block => {
+          if(block.querySelector('.footer-accordion-trigger-{{ section.id }}')) {
+            block.classList.remove('is-open');
+          }
+        });
+        
+        // Open if it was closed
+        if (!isOpen) {
+          parentBlock.classList.add('is-open');
+        }
+      });
+    });
+  });
+</script>
 
 {% schema %}
 {
