@@ -51,8 +51,14 @@
                 {%- for pill in pill_array -%}
                   {%- assign pill_clean = pill | strip -%}
                   {%- assign pill_handle = pill_clean | handleize -%}
+                  {%- assign is_active = false -%}
+                  {%- if collection.handle == pill_handle -%}
+                    {%- assign is_active = true -%}
+                  {%- elsif collection.handle == 'all' and pill_clean == 'ALL' -%}
+                    {%- assign is_active = true -%}
+                  {%- endif -%}
                   <li>
-                    <a href="/collections/{{ pill_handle }}" class="collection-pill {% if collection.handle == pill_handle or (collection.handle == 'all' and pill_clean == 'ALL') %}collection-pill--active{% endif %}" style="display: inline-block; padding: 6px 16px; border: 1px solid #e5e8ec; border-radius: 40px; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0b1220; text-decoration: none; transition: all 0.3s ease;">
+                    <a href="/collections/{{ pill_handle }}" class="collection-pill {% if is_active %}collection-pill--active{% endif %}" style="display: inline-block; padding: 6px 16px; border: 1px solid #e5e8ec; border-radius: 40px; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0b1220; text-decoration: none; transition: all 0.3s ease;">
                       {{ pill_clean }}
                     </a>
                   </li>
