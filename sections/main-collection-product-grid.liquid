@@ -113,7 +113,7 @@
             enable_sorting: section.settings.enable_sorting,
             filter_type: section.settings.filter_type,
             paginate: paginate,
-            collection_pills: section.settings.collection_pills
+            section_blocks: section.blocks
           %}
         </aside>
       {%- endif -%}
@@ -252,13 +252,6 @@
       "content": "t:sections.main-collection-product-grid.settings.header__1.content"
     },
     {
-      "type": "text",
-      "id": "collection_pills",
-      "label": "Collection Pills",
-      "default": "ALL, NEW IN, OVERSIZED, GRAPHIC, PLAIN, SALE",
-      "info": "Comma-separated list of collections to show as pills."
-    },
-    {
       "type": "checkbox",
       "id": "enable_filtering",
       "default": true,
@@ -335,6 +328,25 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pill",
+      "name": "Collection Pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Pill Label",
+          "default": "Collection Name"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Pill Link"
+        }
+      ]
     }
   ]
 }
