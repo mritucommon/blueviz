@@ -113,7 +113,7 @@
             enable_sorting: section.settings.enable_sorting,
             filter_type: section.settings.filter_type,
             paginate: paginate,
-            collection_menu: section.settings.collection_menu
+            collection_pills: section.settings.collection_pills
           %}
         </aside>
       {%- endif -%}
@@ -252,10 +252,11 @@
       "content": "t:sections.main-collection-product-grid.settings.header__1.content"
     },
     {
-      "type": "link_list",
-      "id": "collection_menu",
-      "label": "Collection Pill Menu",
-      "info": "Displays a horizontal menu of collections as pills instead of standard filters."
+      "type": "text",
+      "id": "collection_pills",
+      "label": "Collection Pills",
+      "default": "ALL, NEW IN, OVERSIZED, GRAPHIC, PLAIN, SALE",
+      "info": "Comma-separated list of collections to show as pills."
     },
     {
       "type": "checkbox",

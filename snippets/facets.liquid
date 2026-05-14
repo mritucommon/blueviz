@@ -45,12 +45,15 @@
               class="facets__wrapper"
             {% endif %}
           >
-            {%- if collection_menu != blank -%}
+            {%- if collection_pills != blank -%}
+              {%- assign pill_array = collection_pills | split: ',' -%}
               <ul class="collection-pills-menu list-unstyled" style="display: flex; gap: 10px; margin: 0; padding: 0; flex-wrap: wrap; align-items: center;">
-                {%- for link in collection_menu.links -%}
+                {%- for pill in pill_array -%}
+                  {%- assign pill_clean = pill | strip -%}
+                  {%- assign pill_handle = pill_clean | handleize -%}
                   <li>
-                    <a href="{{ link.url }}" class="collection-pill {% if link.active %}collection-pill--active{% endif %}" style="display: inline-block; padding: 6px 16px; border: 1px solid #e5e8ec; border-radius: 40px; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0b1220; text-decoration: none; transition: all 0.3s ease;">
-                      {{ link.title }}
+                    <a href="/collections/{{ pill_handle }}" class="collection-pill {% if collection.handle == pill_handle or (collection.handle == 'all' and pill_clean == 'ALL') %}collection-pill--active{% endif %}" style="display: inline-block; padding: 6px 16px; border: 1px solid #e5e8ec; border-radius: 40px; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0b1220; text-decoration: none; transition: all 0.3s ease;">
+                      {{ pill_clean }}
                     </a>
                   </li>
                 {%- endfor -%}
@@ -481,7 +484,7 @@
           {%- if enable_sorting -%}
             <div class="facet-filters sorting caption">
               <div class="facet-filters__field">
-                {%- if collection_menu == blank -%}
+                {%- if collection_pills == blank -%}
                   <h2 class="facet-filters__label caption-large text-body">
                     <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
                   </h2>
@@ -493,7 +496,7 @@
                     class="facet-filters__sort select__select caption-large"
                     id="SortBy"
                     aria-describedby="a11y-refresh-page-message"
-                    {% if collection_menu != blank %}style="border-radius: 40px; border: 1px solid #e5e8ec; padding: 6px 36px 6px 16px; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0b1220; height: auto; min-height: unset; line-height: 1.5; background-color: transparent; box-shadow: none;"{% endif %}
+                    {% if collection_pills != blank %}style="border-radius: 40px; border: 1px solid #e5e8ec; padding: 6px 36px 6px 16px; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0b1220; height: auto; min-height: unset; line-height: 1.5; background-color: transparent; box-shadow: none;"{% endif %}
                   >
                     {%- for option in results.sort_options -%}
                       <option
@@ -502,7 +505,7 @@
                           selected="selected"
                         {% endif %}
                       >
-                        {%- if collection_menu != blank -%}SORT: {% endif %}{{ option.name | escape }}
+                        {%- if collection_pills != blank -%}SORT: {% endif %}{{ option.name | escape }}
                       </option>
                     {%- endfor -%}
                   </select>
@@ -517,7 +520,7 @@
               </noscript>
             </div>
           {%- endif -%}
-          {%- if collection_menu == blank -%}
+          {%- if collection_pills == blank -%}
             <div class="product-count light" role="status">
               <h2 class="product-count__text text-body">
                 <span id="ProductCountDesktop">
