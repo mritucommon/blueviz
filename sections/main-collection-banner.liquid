@@ -12,10 +12,20 @@
 <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
   <div class="collection-hero__inner page-width">
     <div class="collection-hero__text-wrapper">
+      <nav class="collection-hero__breadcrumb" role="navigation" aria-label="breadcrumbs">
+        <a href="{{ routes.root_url }}" title="Home">HOME</a>
+        <span aria-hidden="true" class="breadcrumb__sep">/</span>
+        <span>{{ collection.title | upcase }}</span>
+      </nav>
+
       <h1 class="collection-hero__title">
         <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
+        {{- collection.title | escape | upcase -}}
       </h1>
+
+      <p class="collection-hero__product-count">
+        {{ collection.products_count }} products
+      </p>
 
       {%- if section.settings.show_collection_description -%}
         <div class="collection-hero__description rte">{{ collection.description }}</div>
