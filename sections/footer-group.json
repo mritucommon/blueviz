@@ -2,6 +2,72 @@
   "name": "Footer",
   "type": "footer",
   "sections": {
+    "store_features": {
+      "type": "store-features",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "truck",
+            "title": "FREE DELIVERY",
+            "subtext": "Orders above ₹999"
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "returns",
+            "title": "EASY RETURNS",
+            "subtext": "30-day hassle free"
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "SECURE PAYMENT",
+            "subtext": "100% protected"
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "icon": "cash",
+            "title": "CASH ON DELIVERY",
+            "subtext": "Available pan-India"
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4"
+      ],
+      "settings": {
+        "full_width": false,
+        "icon_box_size": 48,
+        "icon_box_radius": 12,
+        "icon_size": 22,
+        "icon_bg_color": "#f4f5f7",
+        "icon_bg_hover_color": "#e6edf5",
+        "icon_color": "#0b1220",
+        "title_font_size": 13,
+        "subtext_font_size": 12,
+        "title_color": "#0b1220",
+        "subtext_color": "#8892a0",
+        "show_dividers": true,
+        "divider_color": "#e5e8ec",
+        "section_bg": "#ffffff",
+        "border_top": 1,
+        "border_bottom": 1,
+        "border_color": "#f0f2f5",
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 25,
+        "padding_bottom_mobile": 25
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -101,6 +167,7 @@
     }
   },
   "order": [
+    "store_features",
     "footer"
   ]
 }
