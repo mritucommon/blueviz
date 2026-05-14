@@ -37,6 +37,17 @@
           <input name="options[prefix]" type="hidden" value="last">
         {%- endif -%}
 
+        {%- if template.name == 'collection' -%}
+          <div class="collection-pills-container">
+            <a href="/collections/all" class="collection-pill {% if collection.handle == 'all' or collection.handle == blank %}active{% endif %}">ALL</a>
+            <a href="/collections/new-in" class="collection-pill {% if collection.handle == 'new-in' %}active{% endif %}">NEW IN</a>
+            <a href="/collections/oversized" class="collection-pill {% if collection.handle == 'oversized' %}active{% endif %}">OVERSIZED</a>
+            <a href="/collections/graphic" class="collection-pill {% if collection.handle == 'graphic' %}active{% endif %}">GRAPHIC</a>
+            <a href="/collections/plain" class="collection-pill {% if collection.handle == 'plain' %}active{% endif %}">PLAIN</a>
+            <a href="/collections/sale" class="collection-pill {% if collection.handle == 'sale' %}active{% endif %}">SALE</a>
+          </div>
+        {%- endif -%}
+
         {% if enable_filtering %}
           {% comment %} Heading is the first tabbable element on filter type horizontal {% endcomment %}
           <div

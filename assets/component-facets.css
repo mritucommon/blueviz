@@ -1110,3 +1110,51 @@ input.mobile-facets__checkbox {
     padding: 0 1rem 1rem;
   }
 }
+
+/* Custom Collection Pills */
+.collection-pills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.collection-pill {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #8892a0;
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid #e5e8ec;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  line-height: 1;
+  background: transparent;
+}
+
+.collection-pill:hover,
+.collection-pill.active {
+  color: #0b1220;
+  border-color: #0b1220;
+}
+
+@media screen and (max-width: 749px) {
+  .collection-pills-container {
+    padding: 10px 0;
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+  .collection-pills-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+  .collection-pill {
+    white-space: nowrap;
+  }
+}
